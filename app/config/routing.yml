@@ -1,0 +1,3 @@
+my_app_billetterie:
+    resource: "@MyAppBilletterieBundle/Resources/config/routing.yml"
+    prefix:   /billetterie

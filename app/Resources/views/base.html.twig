@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+        <title>{% block title %}{% endblock %} - Musée du Louvre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    {% block stylesheets %}
+      {# On charge le CSS de bootstrap depuis le site directement #}
+      <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+      <!-- Optional theme -->   
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-awusxf8AUojygHf2+joICySzB780jVvQaVCAt1clU3QsyAitLGul28Qxb2r1e5g+" crossorigin="anonymous">     
+
+      <!-- Font-Awesome --> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+      <!-- style local -->
+        {% stylesheets 'bundles/MyAppBilletterie/css/style.css' filter='cssrewrite' %}
+         <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+
+  </head>
+
+    <body id="{% block theme %}page-top{% endblock %}">
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand page-scroll" href="#page-top">
+                {% image '@MyAppBilletterieBundle/Resources/public/images/logo-Louvre.png' %}
+                  <img src= " {{ asset_url }} " alt= "Logo Louvre" />
+                {% endimage %}
+              </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                  <a class="page-scroll" href="http://localhost:88/museeLouvre/web/app_dev.php/billetterie/"><i class="fa fa-home fa-2x"></i>Accueil</a>
+                </li>
+                <li>
+                  <a class="page-scroll" href="tarif"><i class="fa fa-eur fa-2x"></i> Grille tarifaire</a>
+                </li>
+
+                <li>
+                  <a class="page-scroll" href="form"><i class="fa fa-cart-plus fa-2x"></i> Réservation</a>
+                </li>
+                <li>
+                  <a class="page-scroll" href="mention"><i class="fa fa-gavel fa-2x"></i> Mentions légales</a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+          </div>
+      <!-- /.container-fluid -->
+        </nav>
+        {% block body %}{% endblock %}
+        <!-- Header -->
+        <header>
+
+        {% block header %}{% endblock %}
+
+        </header>
+
+        {% block sidebar %}{% endblock %}
+
+      <footer>
+        <div class="container text-center">
+            <p>Designed by <a href="http://znackweb.com"><span>Znackweb</span>.com</a></p>
+            <p><a href="#" }}><span><i class="fa fa-gavel"></i> Mentions </span>Légales</a></p>
+        </div>
+      </footer>
+        {% block javascripts %}
+            {% javascripts %}
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+                <script src="https://maxcdn.bootstrapcdn.com/bootlint/0.14.2/bootlint.min.js" integrity="sha384-SLfe/wBrCVfyGjtLhfUmA5cYQLnNVTRmwMUJ11s7x5HxXCKom2oeEwX9bvY74CAs" crossorigin="anonymous"></script>
+
+                <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+                crossorigin="anonymous"></script>
+
+                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+            {% endjavascripts %}
+        {% endblock %}
+  </body>
+</html>

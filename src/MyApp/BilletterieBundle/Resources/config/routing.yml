@@ -1,0 +1,19 @@
+my_app_billetterie_home:
+    path:      /
+    defaults:
+        _controller: MyAppBilletterieBundle:Default:index
+
+my_app_billetterie_form:
+    path:      /form
+    defaults:
+        _controller: MyAppBilletterieBundle:Default:form
+
+my_app_billetterie_tarif:
+    path:      /tarif
+    defaults:
+        _controller: MyAppBilletterieBundle:Default:tarif
+
+my_app_billetterie_mention:
+    path:      /mention
+    defaults:
+        _controller: MyAppBilletterieBundle:Default:mention

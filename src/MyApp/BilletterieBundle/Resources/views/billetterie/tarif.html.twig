@@ -1,0 +1,43 @@
+ {% extends "MyAppBilletterieBundle::layout.html.twig" %}
+
+   {% block title %}{{ parent() }} - Grille Tarifaire{% endblock %}
+
+{% block header %}
+  
+    <div class="container">
+        <div class="slider-container">
+          <div class="intro-text">
+            <div class="intro-heading"> GRILLE TARIFAIRE </div> 
+              <div class="intro-lead-in">             
+                <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                      <th>Description</th>
+                      <th>Tarifs</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr class="success">
+                      <td>- 4 ans</td>
+                      <td>0 €uros</td>
+                  </tr>
+                  <tr>
+                      <td>- 12 ans</td>
+                      <td>8 €uros</td>
+                  </tr>
+                  <tr>
+                      <td>De 12 ans à 64 ans</td>
+                      <td>16 €uros</td>
+                  </tr>
+                  <tr>
+                      <td>A partir de 65 ans</td>
+                      <td>10 €uros</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div> 
+    </div><!--/container-->
+  </div>
+{% endblock %}
