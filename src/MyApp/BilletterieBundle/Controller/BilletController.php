@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 class BilletController extends Controller
 {
     /**
-     * @Route("/cde/{id}", name="my_app_billetterie_cde")
+     * @Route("/billet", name="my_app_billetterie_billet")
      */
-    public function addAction(Request $request, $etape)
+    public function addAction(Request $request)
   {
     // On crée un objet Billet
     $billet = new Billet();

@@ -26,7 +26,7 @@ class CommandeType extends AbstractType
                 'attr' => array(
                     'class' => 'date dateVisite',
                     'style' => 'visibility:hidden')))
-            ->add('dateVisite', DateType::class, array ('widget' => 'single_text',
+            ->add('datevisite', DateType::class, array ('widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'label' => 'Votre date de visite'))
             ->add('email', EmailType::class,

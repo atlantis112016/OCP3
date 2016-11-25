@@ -67,7 +67,7 @@ class CommandeController extends Controller
                 $em->persist($cde);
                 $em->flush();
                 $request->getSession()->getFlashBag()->add('notice', 'ETAPE 1 bien enregistrée');
-                return $this->redirectToRoute('my_app_billetterie_cde', array('id' => $cde->getId()));
+                return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $cde->getId()));
             }
 
         }
