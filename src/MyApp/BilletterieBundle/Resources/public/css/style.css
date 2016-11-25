@@ -212,29 +212,9 @@ section ul li:before {
 /*--------------------
 3. Header
 --------------------*/
-img 
-{ 
-	max-width: 100%; 
- 	height: auto 
- }
 
-@media (min-width: 1600px) 
-{ 
-	#header 
-	{ 
-		min-height: 630px; 
-	} 
-} 
 
-@media (min-width: 1280px) 
-{ 
-	#header 
-	{ 
-		min-height: 500px; 
-	} 
-}
-
-/*header {
+header {
 	background-image: url(../images/accueil.png);
 	background-repeat: none;
 	background-attachment: scroll;
@@ -245,7 +225,7 @@ img
 	-o-background-size: cover;
 	text-align: center;
 	color: #fff;
-}*/
+}
 
 header .intro-text {
 	padding-top: 300px;
@@ -863,3 +843,21 @@ and (max-width : 480px) {
 	font-size: 20px;
 }
 }
+
+
+th {
+	font-size: 18px;
+	font-weight: 800;
+	letter-spacing: -0.6px;
+	vertical-align:middle;
+	text-align: center;
+}
+
+td {
+	font-size: 18px;
+	vertical-align:middle; 
+	text-align: center;
+	font-weight: 300;
+	letter-spacing: -0.6px;
+}
+

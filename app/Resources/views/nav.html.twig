@@ -21,14 +21,14 @@
               <a class="page-scroll" href="http://localhost:88/museeLouvre/web/app_dev.php/billetterie/"><i class="fa fa-home fa-2x"></i>Accueil</a>
             </li>
             <li>
-              <a class="page-scroll" href="#myModal" data-toggle="modal"><i class="fa fa-eur fa-2x"></i> Grilles tarifaires</a>
+              <a class="page-scroll" href="{{ path('my_app_billetterie_tarif') }}" data-toggle="modal"><i class="fa fa-eur fa-2x"></i> Grilles tarifaires</a>
             </li>
 
             <li>
-              <a class="page-scroll" href="#"><i class="fa fa-cart-plus fa-2x"></i> Réservation</a>
+              <a class="page-scroll" href="{{ path('my_app_billetterie_cde') }}"><i class="fa fa-cart-plus fa-2x"></i> Réservation</a>
             </li>
             <li>
-              <a class="page-scroll" href="mention"><i class="fa fa-gavel fa-2x"></i> Mentions légales</a>
+              <a class="page-scroll" href="{{ path('my_app_billetterie_mention') }}"><i class="fa fa-gavel fa-2x"></i> Mentions légales</a>
             </li>
           </ul>
         </div>

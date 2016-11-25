@@ -1,5 +1,6 @@
+session_start();
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="utf-8">
         <title>{% block title %}{% endblock %} - Musée du Louvre</title>
@@ -51,17 +52,17 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
                 <li>
-                  <a class="page-scroll" href="http://localhost:88/museeLouvre/web/app_dev.php/billetterie/"><i class="fa fa-home fa-2x"></i>Accueil</a>
+                  <a class="page-scroll" href="{{ path('my_app_billetterie_home') }}"><i class="fa fa-home fa-2x"></i>Accueil</a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="tarif"><i class="fa fa-eur fa-2x"></i> Grille tarifaire</a>
+                  <a class="page-scroll" href="{{ path('my_app_billetterie_tarif') }}"><i class="fa fa-eur fa-2x"></i> Grille tarifaire</a>
                 </li>
 
                 <li>
-                  <a class="page-scroll" href="form"><i class="fa fa-cart-plus fa-2x"></i> Réservation</a>
+                  <a class="page-scroll" href="{{ path('my_app_billetterie_cde') }}"><i class="fa fa-cart-plus fa-2x"></i> Réservation</a>
                 </li>
                 <li>
-                  <a class="page-scroll" href="mention"><i class="fa fa-gavel fa-2x"></i> Mentions légales</a>
+                  <a class="page-scroll" href="{{ path('my_app_billetterie_mention') }}"><i class="fa fa-gavel fa-2x"></i> Mentions légales</a>
                 </li>
               </ul>
             </div>
@@ -95,6 +96,7 @@
                 crossorigin="anonymous"></script>
 
                 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+
             {% endjavascripts %}
         {% endblock %}
   </body>

@@ -3,6 +3,7 @@
 namespace MyApp\BilletterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Billet
@@ -30,7 +31,8 @@ class Billet
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      * @ORM\Column(name="nom", type="string", length=30)
      */
     private $nom;
@@ -57,21 +59,34 @@ class Billet
     private $typeJournee;
 
     /**
+     * @var bool
+     * @ORM\Column(name="reduit", type="boolean")
+     */
+    private $tarifReduit;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="pays", type="string", length=30)
      */
     private $pays;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="montant_billet", type="integer")
+     */
+    private $montantBillet;
+
       /**
        * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\commande", cascade={"persist"})
-       * @ORM\JoinColumn(name="Cde_id", referencedColumnName="id")
+       * @ORM\JoinColumn(name="idCde", referencedColumnName="idCde")
        */
       private $commande;
 
       /**
        * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\typeTarif", cascade={"persist"})
-       * @ORM\JoinColumn(name="typeTarif_id", referencedColumnName="id")
+       * @ORM\JoinColumn(name="typeTarif_id", referencedColumnName="idTarif")
        */
       private $typeTarif;
 
@@ -230,38 +245,104 @@ class Billet
         return $this->pays;
     }
 
-    /**
-     * Set commande_id
-     *
-     * */
-  public function setCommande(Advert $advert)
-  {
-    $this->commande = $commande;
-    return $this;
-  }
 
     /**
-     * get commande_id
+     * Set commande
      *
-     * */
-  public function getCommande()
-  {
-    return $this->commande;
-  }
+     * @param \MyApp\BilletterieBundle\Entity\commande $commande
+     *
+     * @return Billet
+     */
+    public function setCommande(\MyApp\BilletterieBundle\Entity\commande $commande = null)
+    {
+        $this->commande = $commande;
 
-  public function setTypeTarif(Advert $advert)
-  {
-    $this->typeTarif = $typeTarif;
-    return $this;
-  }
+        return $this;
+    }
 
     /**
-     * get typeTarif_id
+     * Get commande
      *
-     * */
-  public function getTypeTarif()
-  {
-    return $this->typeTarif;
-  }
+     * @return \MyApp\BilletterieBundle\Entity\commande
+     */
+    public function getCommande()
+    {
+        return $this->commande;
+    }
+
+    /**
+     * Set typeTarif
+     *
+     * @param \MyApp\BilletterieBundle\Entity\typeTarif $typeTarif
+     *
+     * @return Billet
+     */
+    public function setTypeTarif(\MyApp\BilletterieBundle\Entity\typeTarif $typeTarif = null)
+    {
+        $this->typeTarif = $typeTarif;
+
+        return $this;
+    }
+
+    /**
+     * Get typeTarif
+     *
+     * @return \MyApp\BilletterieBundle\Entity\typeTarif
+     */
+    public function getTypeTarif()
+    {
+        return $this->typeTarif;
+    }
+
+    /**
+     * Set tarifReduit
+     *
+     * @param boolean $tarifReduit
+     *
+     * @return Billet
+     */
+    public function setTarifReduit($tarifReduit)
+    {
+        $this->tarifReduit = $tarifReduit;
+
+        return $this;
+    }
+
+    /**
+     * Get tarifReduit
+     *
+     * @return boolean
+     */
+    public function getTarifReduit()
+    {
+        return $this->tarifReduit;
+    }
+
+    /**
+     * Set montantBillet
+     *
+     * @param integer $montantBillet
+     *
+     * @return Billet
+     */
+    public function setMontantBillet($montantBillet)
+    {
+        if ($this->getTypeJournee() == 'demiJournee') {
+            $this->montantBillet = $montantBillet / 2;
+        }
+        else {
+            $this->montantBillet = $montantBillet;
+        }
+        return $this;
+    }
+
+    /**
+     * Get montantBillet
+     *
+     * @return integer
+     */
+    public function getMontantBillet()
+    {
+        return $this->montantBillet;
+    }
 }
-

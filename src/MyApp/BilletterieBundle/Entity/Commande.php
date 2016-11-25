@@ -3,6 +3,8 @@
 namespace MyApp\BilletterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * commande
@@ -23,7 +25,8 @@ class Commande
 
     /**
      * @var \DateTime
-     *
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      * @ORM\Column(name="datereserv", type="datetime")
      */
     private $datereserv;
@@ -62,6 +65,19 @@ class Commande
      * @ORM\Column(name="tokenStripe", type="string", length=255)
      */
     private $tokenStripe;
+
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbBillet", type="integer")
+     */
+    private $nbBillet;
+
+   /**
+    * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet", mappedBy="commande", cascade={"persist"})
+    * 
+    */
+      private $billets;
 
 
     /**
@@ -217,5 +233,69 @@ class Commande
     {
         return $this->tokenStripe;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->billets = new ArrayCollection();
+    }
 
+    /**
+     * Add billet
+     *
+     * @param \MyApp\BilletterieBundle\Entity\Billet $billet
+     *
+     * @return Commande
+     */
+    public function addBillet(\MyApp\BilletterieBundle\Entity\Billet $billet)
+    {
+        $this->billets[] = $billet;
+
+        return $this;
+    }
+
+    /**
+     * Remove billet
+     *
+     * @param \MyApp\BilletterieBundle\Entity\Billet $billet
+     */
+    public function removeBillet(\MyApp\BilletterieBundle\Entity\Billet $billet)
+    {
+        $this->billets->removeElement($billet);
+    }
+
+    /**
+     * Get billets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBillets()
+    {
+        return $this->billets;
+    }
+
+    /**
+     * Set nbBillet
+     *
+     * @param integer $nbBillet
+     *
+     * @return Commande
+     */
+    public function setNbBillet($nbBillet)
+    {
+        $this->nbBillet = $nbBillet;
+
+        return $this;
+    }
+
+    /**
+     * Get nbBillet
+     *
+     * @return integer
+     */
+    public function getNbBillet()
+    {
+        return $this->nbBillet;
+    }
+}

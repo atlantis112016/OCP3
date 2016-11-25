@@ -94,4 +94,3 @@ class TypeTarif
         return $this->montant;
     }
 }
-
