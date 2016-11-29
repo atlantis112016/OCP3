@@ -861,3 +861,21 @@ td {
 	letter-spacing: -0.6px;
 }
 
+/***************
+	Form
+ */
+label {
+	font-size: 20px;
+	text-align: left;
+	font-weight: bold;
+	letter-spacing: -0.6px;
+	color:#2196F3;
+}
+input {
+	font-size: 18px;
+	text-align: left;
+	font-weight: bold;
+}
+.form-group {
+	text-align: left;
+}

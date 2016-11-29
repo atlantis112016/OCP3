@@ -1,5 +1,4 @@
 <?php
-
 namespace MyApp\BilletterieBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -10,8 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-
 class CommandeType extends AbstractType
 {
     /**
@@ -20,21 +17,15 @@ class CommandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('datereserv')
-            ->add('email',EmailType::class,
+
+            ->add('datereserv', TextType::class,
+                array( 'disabled' => true))
+            ->add('datevisite', TextType::class)
+            ->add('email', EmailType::class,
                 array( 'required' => true ))
-            ->add('dateVisite', TextType::class)
-            ->add('montantTotal')
-            ->add('typeJournee',ChoiceType::class, array('choices'  => array(
-        'Journée' => 'Journée',
-        'Demi-journée' => 'Demi-journée'),
-        'choices_as_values' => true))
-            ->add('codeReserv', TextType::class)
-            ->add('statut')
-            ->add('tokenStripe')
             ->add('nbBillet', ChoiceType::class,
                 array( 'required' => true,
-                    'label'  => 'Choisir le nombre de billet',
+                    'label'  => 'Choisir nombre de billet',
                     'choices' => array(
                         '1' => 1,
                         '2' => 2,
@@ -46,13 +37,25 @@ class CommandeType extends AbstractType
                         '8' => 8,
                         '9' => 9,
                         '10' => 10,
-                    )))
+                )))
             ->add('save', SubmitType::class, array ('attr' => array(
                 'class' => 'btn-primary pull-right'),
                 'label' => 'ETAPE 2'))
         ;
     }
-    
+/*         ->add('montantTotal', TextType::class,
+                array( 'required' => true,
+                    'label'  => 'Montant Total'))
+            ->add('codeReserv', TextType::class,
+                array( 'required' => true,
+                    'label'  => 'Code de la réservation'))
+            ->add('statut', TextType::class,
+                array( 'required' => true,
+                    'label'  => 'Statut de la commande'))
+            ->add('tokenStripe', TextType::class,
+                array( 'required' => true,
+                    'label'  => 'Code Stripe'))
+*/
     /**
      * {@inheritdoc}
      */

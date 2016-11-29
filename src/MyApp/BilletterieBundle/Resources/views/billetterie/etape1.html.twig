@@ -1,6 +1,5 @@
 {% extends "MyAppBilletterieBundle::layout.html.twig" %}
-<?php $_SESSION['id'] = $_GET['id'];
-$etape = $_GET['Etape']; ?>
+
    {% block title %}{{ parent() }} - Commande {% endblock %}
 
 {% block header %}
@@ -8,73 +7,104 @@ $etape = $_GET['Etape']; ?>
 <div class="container">
     <div class="slider-container">
         <div class="intro-text">
-            <div class="intro-heading"> Commande </div>
+            <div class="intro-heading"> {{ 'COMMANDE' |trans }} </div>
             <div class="intro-lead-in">
 
                 <ul class="nav nav-tabs" id="tab">
-                    <li class="nav col-md-3 active" id="liJour"><a href="#jour" id="ongletJour" data-toggle="tab">ETAPE 1</a></li>
-                    <li class="nav col-md-3 disabled" id="liBillet"><a href="#billet" id="ongletBillet" data-toggle="tab">ETAPE 2</a></li>
-                    <li class="nav col-md-3 disabled" id="liPaiement"><a href="#paiement" id="ongletPaiement" data-toggle="tab">ETAPE 3</a></li>
-                    <li class="nav col-md-3 disabled" id="liConfirmation"><a href="#confirmation" id="ongletConfirmation" data-toggle="tab">RECAPITULATIF</a></li>
-                </ul>
-    {{ form_start ( form ) }}
-                {{ form_label (form.email) }}
-                {# Ajouter +sieurs champs identiques
-                {{ form_label ( form.emails ) }}
-                {{ form_errors ( form.emails ) }}
-                <ul id= "email-fields-list"
-                    data-prototype= " {{ form_widget ( form.emails.vars.prototype )| e }} " >
-                    {% for emailField in form.emails %}
-                        <li>
-                            {{ form_errors ( emailField ) }}
-                            {{ form_widget ( emailField ) }}
-                        </li>
-                    {% endfor %}
+                    <li class="nav col-md-3 active" id="liJour"><a href="#ETAPE1" id="ongletJour" data-toggle="tab">ETAPE 1</a></li>
+                    <li class="nav col-md-3 disabled" id="liBillet"><a href="#ETAPE2" id="ongletBillet" data-toggle="tab">ETAPE 2</a></li>
+                    <li class="nav col-md-3 disabled" id="liPaiement"><a href="#ETAPE3" id="ongletPaiement" data-toggle="tab">ETAPE 3</a></li>
+                    <li class="nav col-md-3 disabled" id="liConfirmation"><a href="#ETAPE4" id="ongletConfirmation" data-toggle="tab">RECAPITULATIF</a></li>
                 </ul>
 
-                <a href= "#" id= "add-another-email" > Ajouter Billet </a> voir javascript ci dessous#}
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
 
-                {{ form_widget ( form ) }}
-    {{ form_end ( form ) }}
+
+             {#  <div class="form-group">
+                    <label for="email" class="cols-sm-2 control-label">Date de votre Commande :</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="email" id="email"  value=" {{ "now" | date("d-m-y") }}"  disabled/>
+                        </div>
+                    </div>
+                </div>#}
+
+                <div class="form-group">
+                    {{ form_label(form.datereserv,'Date de votre Commande : ',{'label_attr':{'class':'cols-sm-2 control-label' }}) }}
+                    {{ form_errors(form.datereserv) }}
+                    <div class="cols-sm-10">
+                        <div id="datereserv" class="input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
+                           {# {{ form_widget(form.datereserv,{'attr':{'class':'form-control input-sm date'}}) }}#}
+                            <input type="text" id="myapp_billetteriebundle_commande_datereserv" name="myapp_billetteriebundle_commande[datereserv]" disabled="disabled" required="required" class="form-control input-sm date" value=" {{ "now" | date("d/m/y H:i") }}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.datevisite,'Date de visite : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
+                        {{ form_errors(form.datevisite) }}
+                        <div class="cols-sm-10">
+                            <div id="date" class="input-group date">
+                                <span class="input-group-addon"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
+                                {{ form_widget(form.datevisite,{'attr':{'class':'form-control input-sm date','placeholder':'Format dd/mm/yyyy'}}) }}
+                            </div>
+                    </div>
+
+                <div class="form-group">
+                    {{ form_label(form.email,'Votre E-mail : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
+                    {{ form_errors(form.email) }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            {{ form_widget(form.email,{'attr':{'class':'form-control  input-sm email', 'placeholder':'Entrer votre Email'}}) }}
+                        </div>
+                    </div>
+                </div>
+                        <div class="form-group">
+                            {{ form_label(form.nbBillet,'Nombre de Billet : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
+                            {{ form_errors(form.nbBillet) }}
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-ticket fa" aria-hidden="true"></i></span>
+                                    {{ form_widget(form.nbBillet,{'attr':{'class':'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+
+
+		{{ form_rest(form)}}
+		{{ form_end(form)}}
+
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}
 
 {% block javascripts %}
-    {% javascripts %}
-{#<script  type= "text/javascript" >
-    // keep track of how many email fields have been rendered
-    var emailCount = ' {{ form.emails | length }} ' ;
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.0/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.fr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js" integrity="sha256-IxYUmOOk74FUrcx5FEMOHVmTJDb7ZAwnC/ivo/OQGxg=" crossorigin="anonymous"></script>
 
-    jQuery ( document ). ready ( function () {
-        jQuery ( '#add-another-email' ). click ( function ( e ) {
-            e . preventDefault ();
-
-            var emailList = jQuery ( '#email-fields-list' );
-
-            // grab the prototype template
-            var newWidget = emailList . attr ( 'data-prototype' );
-            // replace the "__name__" used in the id and name of the prototype
-            // with a number that's unique to your emails
-            // end name attribute looks like name="contact[emails][2]"
-            newWidget = newWidget . replace ( /__name__/g , emailCount );
-            emailCount ++ ;
-
-            // create a new list element and add it to the list
-            var newLi = jQuery ( '<li></li>' ). html ( newWidget );
-            newLi . appendTo ( emailList );
+ <script>
+    $(document).ready(function() {
+        $('#date').datepicker({
+            language: 'fr',
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy",
+            todayBtn: "linked",
+            daysOfWeekDisabled: "0,2",
+            minDate: new Date(),
+            startDate: moment().startOf('month').toDate()
         });
-    })
-</script>#}
 
-    <script>
-        $ ( document ). ready ( function () {
-            $ ( '.js-datepicker' ). datepicker ({
-                format : 'dd-mm-yyyy'
-            });
-        });
+    });
     </script>
-    {% endjavascripts %}
 {% endblock %}
