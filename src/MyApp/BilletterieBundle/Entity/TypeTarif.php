@@ -17,7 +17,7 @@ class TypeTarif
     /**
      * @var int
      *
-     * @ORM\Column(name="idTarif", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */

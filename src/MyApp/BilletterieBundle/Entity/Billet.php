@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Billet
  *
- * @ORM\Table(name="billet")
+ * @ORM\Table()
  * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\BilletRepository")
  */
 class Billet
@@ -16,7 +16,7 @@ class Billet
     /**
      * @var int
      *
-     * @ORM\Column(name="idBillet", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -26,54 +26,54 @@ class Billet
      * @var string
      * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
      *
-     * @ORM\Column(name="nom", type="string", length=30)
+     * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
      * @var string
      * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
-     * @ORM\Column(name="prenom", type="string", length=30)
+     * @ORM\Column(type="string", length=30)
      */
     private $prenom;
 
     /**
      * @var \DateTime
-     * @Assert\DateTime()(message="Ce champ doit être une date au format :dd/mm/yyyy")
+     * @Assert\DateTime(message="Ce champ doit être une date au format :dd/mm/yyyy")
      *
-     * @ORM\Column(name="dateNaissance", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     private $dateNaissance;
 
      /**
      * @var bool
-     * @ORM\Column(name="reduit", type="boolean")
+     * @ORM\Column(type="boolean")
      */
-    private $tarifReduit;
+    private $isTarifReduit;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pays", type="string", length=30)
+     * @ORM\Column(type="string", length=30)
      */
     private $pays;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="montant_billet", type="integer")
+     * @ORM\Column(type="integer")
      */
-    private $montantBillet;
+    private $montant;
 
       /**
-       * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\commande", cascade={"persist"})
-       * @ORM\JoinColumn(name="idCde", referencedColumnName="idCde")
+       * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\Commande", inversedBy="billets", cascade={"persist"})
+       *
        */
       private $commande;
 
       /**
-       * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\typeTarif", cascade={"persist"})
-       * @ORM\JoinColumn(name="typeTarif_id", referencedColumnName="idTarif")
+       * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\TypeTarif", cascade={"persist"})
+       *
        */
       private $typeTarif;
 
@@ -278,5 +278,53 @@ class Billet
     public function getMontantBillet()
     {
         return $this->montantBillet;
+    }
+
+    /**
+     * Set isTarifReduit
+     *
+     * @param boolean $isTarifReduit
+     *
+     * @return Billet
+     */
+    public function setIsTarifReduit($isTarifReduit)
+    {
+        $this->isTarifReduit = $isTarifReduit;
+
+        return $this;
+    }
+
+    /**
+     * Get isTarifReduit
+     *
+     * @return boolean
+     */
+    public function getIsTarifReduit()
+    {
+        return $this->isTarifReduit;
+    }
+
+    /**
+     * Set montant
+     *
+     * @param integer $montant
+     *
+     * @return Billet
+     */
+    public function setMontant($montant)
+    {
+        $this->montant = $montant;
+
+        return $this;
+    }
+
+    /**
+     * Get montant
+     *
+     * @return integer
+     */
+    public function getMontant()
+    {
+        return $this->montant;
     }
 }

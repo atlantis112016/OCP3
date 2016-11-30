@@ -17,7 +17,14 @@ class CommandeController extends Controller
      */
     public function formAction(Request $request)
     {
+        //connexion base
+        $em = $this->getDoctrine()->getManager();
+        //connexion à l'entité Commande
         $cde = new Commande();
+
+        //permet de voir ce qui se passe dans symfony
+        dump($cde);
+
         $form = $this->createForm(CommandeType:: class, $cde);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -28,7 +35,7 @@ class CommandeController extends Controller
 
                 $codeReserv = $getCodeReserv->genCodeResa();
                 $cde->setCodeReserv($codeReserv);
-                $em = $this->getDoctrine()->getManager();
+
 
                 $cde = $form->getData();
                 $em->persist($cde);

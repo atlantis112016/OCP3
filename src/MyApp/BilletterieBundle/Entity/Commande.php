@@ -9,15 +9,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * commande
  *
- * @ORM\Table(name="commande")
- * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\commandeRepository")
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\CommandeRepository")
  */
 class Commande
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="idCde", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -27,15 +27,15 @@ class Commande
      * @var \DateTime
      * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
      * @Assert\DateTime()(message="Ce champ doit être une date au format :dd/mm/yyyy")
-     * @ORM\Column(name="datereserv", type="datetime")
+     * @ORM\Column(type="datetime")
      */
-    private $datereserv;
+    private $dateReserv;
 
     /**
      * @var string
      * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
-     * @Assert\Email(message="Mercide rentrer un mail valide")
-     * @ORM\Column(name="email", type="string", length=50)
+     * @Assert\Email(message="Merci de rentrer un mail valide")
+     * @ORM\Column( type="string", length=50)
      */
     private $email;
 
@@ -43,54 +43,54 @@ class Commande
      * @var \DateTime
      * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
      * @Assert\DateTime()message="Ce champ doit être une date au format :dd/mm/yyyy"
-     * @ORM\Column(name="dateVisite", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     private $dateVisite;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="montantTotal", type="decimal", scale=2)
+     * @ORM\Column(type="decimal", scale=2)
      */
     private $montantTotal;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="typeJournee", type="string", length=30)
+     * @ORM\Column(type="string", length=30)
      */
     private $typeJournee;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="codeReserv", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $codeReserv;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statut", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $statut;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tokenStripe", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      */
     private $tokenStripe;
 
      /**
      * @var integer
      *
-     * @ORM\Column(name="nbBillet", type="integer")
+     * @ORM\Column(type="integer")
      */
     private $nbBillet;
 
    /**
-    * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet", mappedBy="commande", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet",mappedBy="commande", cascade={"persist"})
     * 
     */
       private $billets;
@@ -107,27 +107,27 @@ class Commande
     }
 
     /**
-     * Set datereserv
+     * Set dateReserv
      *
-     * @param \DateTime $datereserv
+     * @param \DateTime $dateReserv
      *
      * @return commandes
      */
-    public function setDatereserv($datereserv)
+    public function setDatereserv($dateReserv)
     {
-        $this->datereserv = $datereserv;
+        $this->dateReserv = $dateReserv;
 
         return $this;
     }
 
     /**
-     * Get datereserv
+     * Get dateReserv
      *
      * @return \DateTime
      */
     public function getDatereserv()
     {
-        return $this->datereserv;
+        return $this->dateReserv;
     }
 
     /**
@@ -255,7 +255,7 @@ class Commande
     public function __construct()
     {
         $this->billets = new ArrayCollection();
-        $this->datereserv = new \DateTime();
+        $this->dateReserv = new \DateTime();
     }
 
     /**
