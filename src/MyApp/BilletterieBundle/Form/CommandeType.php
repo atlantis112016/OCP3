@@ -8,9 +8,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use MyApp\BilletterieBundle\Entity\Billet;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 
 class CommandeType extends AbstractType
 {
@@ -25,8 +28,8 @@ class CommandeType extends AbstractType
                 array( 'required' => true ))
             ->add('dateVisite', DateTimeType::class, array('widget'=> 'single_text'))
             ->add('typeJournee',ChoiceType::class, array('choices'  => array(
-        'Journée' => 'Journée',
-        'Demi-journée' => 'Demi-journée'),
+        'Journée' => 'Journee',
+        'Demi-journée' => 'Demi-journee'),
         'choices_as_values' => true))
              ->add('nbBillet', ChoiceType::class,
                 array( 'required' => true,
@@ -43,10 +46,28 @@ class CommandeType extends AbstractType
                         '9' => 9,
                         '10' => 10,
                     )))
-            ->add('save', SubmitType::class, array ('attr' => array(
-                'class' => 'btn-primary pull-right'),
-                'label' => 'ETAPE 2'))
-        ;
+            ->add('billets', CollectionType::class,[
+                'entry_type' => BilletType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false
+            ]);
+         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+    }
+
+    public function onPreSetData(FormEvent $event) {
+        $data = $event->getData();
+        $form = $event->getForm();
+
+        if ($data->getBillets()->isEmpty()) {
+            $form->remove('billets');
+        } else {
+            $form->remove('dateVisite');
+            $form->remove('typeJournee');
+            $form->remove('nbBillet');
+            $form->remove('email');
+        }
     }
     
     /**

@@ -24,16 +24,16 @@ class Billet
 
     /**
      * @var string
-     * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
+     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
      *
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $nom;
 
     /**
      * @var string
      * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $prenom;
 
@@ -41,27 +41,27 @@ class Billet
      * @var \DateTime
      * @Assert\DateTime(message="Ce champ doit être une date au format :dd/mm/yyyy")
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateNaissance;
 
      /**
      * @var bool
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isTarifReduit;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $pays;
 
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $montant;
 
@@ -184,7 +184,6 @@ class Billet
         return $this->pays;
     }
 
-
     /**
      * Set commande
      *
@@ -212,11 +211,11 @@ class Billet
     /**
      * Set typeTarif
      *
-     * @param \MyApp\BilletterieBundle\Entity\typeTarif $typeTarif
+     * @param \MyApp\BilletterieBundle\Entity\TypeTarif $typeTarif
      *
      * @return Billet
      */
-    public function setTypeTarif(\MyApp\BilletterieBundle\Entity\typeTarif $typeTarif = null)
+    public function setTypeTarif(\MyApp\BilletterieBundle\Entity\TypeTarif $typeTarif = null)
     {
         $this->typeTarif = $typeTarif;
 
@@ -226,7 +225,7 @@ class Billet
     /**
      * Get typeTarif
      *
-     * @return \MyApp\BilletterieBundle\Entity\typeTarif
+     * @return \MyApp\BilletterieBundle\Entity\TypeTarif
      */
     public function getTypeTarif()
     {
@@ -234,27 +233,27 @@ class Billet
     }
 
     /**
-     * Set tarifReduit
+     * Set isTarifReduit
      *
-     * @param boolean $tarifReduit
+     * @param boolean $isTarifReduit
      *
      * @return Billet
      */
-    public function setTarifReduit($tarifReduit)
+    public function setTarifReduit($isTarifReduit)
     {
-        $this->tarifReduit = $tarifReduit;
+        $this->isTarifReduit = $isTarifReduit;
 
         return $this;
     }
 
     /**
-     * Get tarifReduit
+     * Get isTarifReduit
      *
      * @return boolean
      */
     public function getTarifReduit()
     {
-        return $this->tarifReduit;
+        return $this->isTarifReduit;
     }
 
     /**

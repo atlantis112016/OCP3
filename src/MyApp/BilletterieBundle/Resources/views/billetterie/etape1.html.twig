@@ -3,15 +3,19 @@
    {% block title %}{{ parent() }} - Commande {% endblock %}
 
 {% block header %}
+{{ dump() }}
+    {{ form_start(form) }}
 
-<div class="container">
+        {{ form.nbBillet|number_format() }}
+    {{ form_end(form)}}
+{#<div class="container">
     <div class="slider-container">
         <div class="intro-text">
             <div class="intro-heading"> {{ 'COMMANDE' |trans }} </div>
             <div class="intro-lead-in">
 
                 <ul class="nav nav-tabs" id="tab">
-                    <li class="nav col-md-3 active" id="liJour"><a href="#ETAPE1" id="ongletJour" data-toggle="tab">ETAPE 1</a></li>
+                    <li class="nav col-md-3 active" id="Cde"><a href="{{ path('my_app_billetterie_cde') }}" id="ongletJour" data-toggle="tab">ETAPE 1</a></li>
                     <li class="nav col-md-3 disabled" id="liBillet"><a href="#ETAPE2" id="ongletBillet" data-toggle="tab">ETAPE 2</a></li>
                     <li class="nav col-md-3 disabled" id="liPaiement"><a href="#ETAPE3" id="ongletPaiement" data-toggle="tab">ETAPE 3</a></li>
                     <li class="nav col-md-3 disabled" id="liConfirmation"><a href="#ETAPE4" id="ongletConfirmation" data-toggle="tab">RECAPITULATIF</a></li>
@@ -20,24 +24,13 @@
                 {{ form_start(form) }}
                 {{ form_errors(form) }}
 
-
-             {#  <div class="form-group">
-                    <label for="email" class="cols-sm-2 control-label">Date de votre Commande :</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="email" id="email"  value=" {{ "now" | date("d-m-y") }}"  disabled/>
-                        </div>
-                    </div>
-                </div>#}
-
                      <div class="form-group">
                         {{ form_label(form.dateVisite,'Date de visite : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
                         {{ form_errors(form.dateVisite) }}
                         <div class="cols-sm-10">
-                            <div id="date" class="input-group date">
+                            <div id="date" class="input-group date"  data-provide="datepicker" data-date-start-date="0d" data-date-format="dd-mm-yyyy">
                                 <span class="input-group-addon"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
-                                {{ form_widget(form.dateVisite,{'attr':{'class':'form-control input-sm date','placeholder':'Format dd/mm/yyyy'}}) }}
+                                {{ form_widget(form.dateVisite,{'attr':{'class':'form-control  input-sm date','placeholder':'Format dd-mm-yyyy'}}) }}
                             </div>
                     </div>
 
@@ -61,8 +54,21 @@
                                 </div>
                             </div>
                         </div>
-
-
+                       <div class="form-group">
+                            {{ form_label(form.typeJournee,'Type de journée : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
+                            {{ form_errors(form.typeJournee) }}
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-ticket fa" aria-hidden="true"></i></span>
+                                    {{ form_widget(form.typeJournee,{'attr':{'class':'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                <div class="form-group">
+                    <div class="cols-sm-10">
+                        <input type= "submit" value= "ETAPE SUIVANTE"  class= "btn btn-primary pull-right" />
+                    </div>
+                </div>
 
 		{{ form_rest(form)}}
 		{{ form_end(form)}}
@@ -79,29 +85,18 @@
  <script>
     $(document).ready(function() {
         $('#date').datepicker({
-            appendText: "(dd/mm/yyyy)",
-            firstDay: 1,
-            dateFormat:"dd/mm/yy",
-            changeMonth: true,
-            changeYear: true,
-            constrainInput: true,
-            defaultDate: +1,
-            minDate: new Date(),
-            closeText: "Fermer",
-            prevText: "Précédent",
-            nextText: "Suivant",
-            currentText: "Aujourd'hui",
-            monthNames: [ "janvier", "février", "mars", "avril", "mai", "juin",
-                "juillet", "août", "septembre", "octobre", "novembre", "décembre" ],
-            monthNamesShort: [ "janv.", "févr.", "mars", "avr.", "mai", "juin",
-                "juil.", "août", "sept.", "oct.", "nov.", "déc." ],
-            dayNames: [ "dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi" ],
-            dayNamesShort: [ "dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam." ],
-            dayNamesMin: [ "D","L","M","M","J","V","S" ],
-            weekHeader: "Sem.",
-            firstDay: 1,
+            language: 'fr',
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd-mm-yyyy",
+            todayBtn: "linked",
+            daysOfWeekDisabled: "0,2",
+            startDate: '0d',
+            datesDisabled: ['25/12/2016','01/01/2017','17/04/2017','01/05/2017','08/05/2017','25/05/2017','05/06/2017',
+            '14/07/2017','15/08/2017','01/11/2017','11/11/2017','25/12/2017'],
+
         });
 
     });
-    </script>
+    </script>#}
 {% endblock %}

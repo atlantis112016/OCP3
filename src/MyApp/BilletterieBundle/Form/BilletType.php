@@ -20,14 +20,17 @@ class BilletType extends AbstractType
         $builder
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
-            ->add('dateNaissance',BirthdayType::class)
-            ->add('tarifReduit', CheckboxType::class, array(
+            ->add('dateNaissance',BirthdayType::class, array(
+                'days' => range(1,31),
+                'months' => range(1, 12),
+                'years' => range(1902, date('Y')),
+                'format' => 'dd-MM-yyyy'))
+            ->add('isTarifReduit', CheckboxType::class, array(
                 'label' => 'Tarif réduit ',
                 'required'  =>  false))
-            ->add('pays', CountryType::class)
-            ->add('montantBillet')
-            ->add('commande', TextType::class)
-            ->add('typeTarif')
+            ->add('pays', CountryType::class, array(
+                'preferred_choices' => array('fr')
+            ))
         ;
     }
     

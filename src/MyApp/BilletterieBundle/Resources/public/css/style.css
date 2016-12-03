@@ -850,7 +850,7 @@ th {
 	font-weight: 800;
 	letter-spacing: -0.6px;
 	vertical-align:middle;
-	text-align: center;
+	text-align: center
 }
 
 td {
@@ -858,7 +858,7 @@ td {
 	vertical-align:middle; 
 	text-align: center;
 	font-weight: 300;
-	letter-spacing: -0.6px;
+	letter-spacing: -0.6px
 }
 
 /***************
@@ -869,13 +869,17 @@ label {
 	text-align: left;
 	font-weight: bold;
 	letter-spacing: -0.6px;
-	color:#2196F3;
+	color:#2196F3
 }
 input {
 	font-size: 18px;
 	text-align: left;
-	font-weight: bold;
+	font-weight: bold
 }
 .form-group {
-	text-align: left;
+	text-align: left
+}
+
+.separation {
+	border-bottom:2px dashed #75757F
 }

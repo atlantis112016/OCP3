@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * commande
+ * Commande
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\CommandeRepository")
@@ -35,14 +35,14 @@ class Commande
      * @var string
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
      * @Assert\Email(message="Merci de taper un mail valide")
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column( type="string", length=50)
      */
     private $email;
 
     /**
      * @var \DateTime
-     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
-     * @Assert\DateTime(message="Ce champ doit être une date au format :dd-mm-yyyy")
+     * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
+     * @Assert\DateTime()message="Ce champ doit être une date au format :dd/mm/yyyy"
      * @ORM\Column(type="datetime")
      */
     private $dateVisite;
@@ -52,7 +52,7 @@ class Commande
      *
      * @ORM\Column(type="decimal", scale=2)
      */
-    private $montantTotal = 0.00;
+    private $montantTotal;
 
     /**
      * @var string
@@ -268,7 +268,7 @@ class Commande
     public function addBillet(\MyApp\BilletterieBundle\Entity\Billet $billet)
     {
         $this->billets[] = $billet;
-        $billet->setCommande($this);
+
         return $this;
     }
 

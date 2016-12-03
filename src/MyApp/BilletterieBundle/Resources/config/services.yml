@@ -3,9 +3,9 @@ services:
 #        class: MyApp\BilletterieBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
      my_app_billetterie.coderesa:
-        class: MyApp\BilletterieBundle\Command\GenCodeResa
+        class: MyApp\BilletterieBundle\Services\GenCodeResa
 
      my_app_billetterie.limitebillet:
-        class: MyApp\BilletterieBundle\Command\limiteBillet
+        class: MyApp\BilletterieBundle\Services\Tarifs
 
 

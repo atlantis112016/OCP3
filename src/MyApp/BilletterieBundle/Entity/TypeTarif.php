@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * typeTarif
+ * TypeTarif
  *
  * @ORM\Table(name="type_tarif")
- * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\typeTarifRepository")
+ * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\TypeTarifRepository")
  */
 class TypeTarif
 {
@@ -31,7 +31,7 @@ class TypeTarif
     private $nomType;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(name="montant", type="decimal", scale=2)
      */

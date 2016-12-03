@@ -34,4 +34,51 @@ class TestController extends Controller
             return $this->redirectToRoute('my_app_billetterie_cde');
         }
     }
+
+    /**
+     * @Route("/test2", name="my_app_billetterie_test2")
+     */
+    function tarifAction ()
+    {
+
+        $date1 = new \DateTime('now');
+        $date2 = $date1->format('d/m/Y H:i:s');
+
+        $dateAnniv = new \DateTime('29-11-1948');
+        $dateAnniv2 = $dateAnniv->format('d/m/Y');
+
+        $interval = $date1->diff($dateAnniv);
+        $monAge = $interval->format('%y ans');
+        $tarif = 0;
+        $tarifType = "";
+        $tReduit = "false";
+
+        switch ($tReduit)
+        {
+            case ($tReduit === "true") :
+                $tarif = 10;
+                $tarifType = "Réduit";
+                break;
+            case ($monAge >= 60) :
+              $tarif = 12;
+              $tarifType = "Senior";
+              break;
+            case ($monAge >= 12 && $monAge < 60) :
+                $tarif = 16;
+                $tarifType = "Normal";
+                break;
+            case ($monAge >= 4 && $monAge <= 11) :
+                $tarif = 8;
+                $tarifType = "Enfant";
+                break;
+            case ($monAge < 4) :
+                $tarif = 0;
+                $tarifType = "Bébé";
+                break;
+        }
+
+        return new Response('Mon âge est de  : <br/>'.$monAge.' <br/>le tarif est de : '.$tarif."<br/> et c'est un tarif: ".$tarifType.
+            "<br/> et la date d'aujourd'hui est: ".$date2."<br/> et votre date de naissance est: ".$dateAnniv2);
+
+    }
 }
