@@ -3,12 +3,10 @@
    {% block title %}{{ parent() }} - Commande {% endblock %}
 
 {% block header %}
-{{ dump() }}
+    {#{{ dump() }}#}
     {{ form_start(form) }}
 
-        {{ form.nbBillet|number_format() }}
-    {{ form_end(form)}}
-{#<div class="container">
+<div class="container">
     <div class="slider-container">
         <div class="intro-text">
             <div class="intro-heading"> {{ 'COMMANDE' |trans }} </div>
@@ -24,24 +22,27 @@
                 {{ form_start(form) }}
                 {{ form_errors(form) }}
 
+                    {% for message in app.session.flashbag.get('info') %}
+                        <div class="alert alert-danger text-center">{{ message }}</div>
+                    {% endfor %}
                      <div class="form-group">
                         {{ form_label(form.dateVisite,'Date de visite : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
-                        {{ form_errors(form.dateVisite) }}
                         <div class="cols-sm-10">
                             <div id="date" class="input-group date"  data-provide="datepicker" data-date-start-date="0d" data-date-format="dd-mm-yyyy">
                                 <span class="input-group-addon"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
                                 {{ form_widget(form.dateVisite,{'attr':{'class':'form-control  input-sm date','placeholder':'Format dd-mm-yyyy'}}) }}
                             </div>
+                            {{ form_errors(form.dateVisite) }}
                     </div>
 
                 <div class="form-group">
                     {{ form_label(form.email,'Votre E-mail : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
-                    {{ form_errors(form.email) }}
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                             {{ form_widget(form.email,{'attr':{'class':'form-control  input-sm email', 'placeholder':'Entrer votre Email'}}) }}
                         </div>
+                            {{ form_errors(form.email) }}
                     </div>
                 </div>
                         <div class="form-group">
@@ -56,14 +57,15 @@
                         </div>
                        <div class="form-group">
                             {{ form_label(form.typeJournee,'Type de journée : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
-                            {{ form_errors(form.typeJournee) }}
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-ticket fa" aria-hidden="true"></i></span>
                                     {{ form_widget(form.typeJournee,{'attr':{'class':'form-control'}}) }}
                                 </div>
+                                 {{ form_errors(form.typeJournee) }}
                             </div>
                         </div>
+
                 <div class="form-group">
                     <div class="cols-sm-10">
                         <input type= "submit" value= "ETAPE SUIVANTE"  class= "btn btn-primary pull-right" />

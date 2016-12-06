@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 
 class Tarifs
 {
-    public function Calcul($billet, $age, $nombreEnfant, $nombreAdulte)
+    public function Calcul($billet, $age)
     {
 
         switch ($billet) {
@@ -30,13 +30,11 @@ class Tarifs
             case ($age > 12 && $age < 60):
                 $billet->setPrix('16');
                 $billet->setTarif('Normal');
-                $nombreAdulte++;
                 break;
 
             case ($age >= 4 && $age <= 12):
                 $billet->setPrix('8');
                 $billet->setTarif('Enfant');
-                $nombreEnfant++;
                 break;
 
             case ($age < 4):

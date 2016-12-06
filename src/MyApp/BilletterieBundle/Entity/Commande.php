@@ -90,7 +90,7 @@ class Commande
     private $nbBillet;
 
    /**
-    * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet",mappedBy="commande", cascade={"persist"})
+    * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet",mappedBy="commande", cascade={"persist"}, orphanRemoval=true)
     * 
     */
       private $billets;
@@ -280,6 +280,7 @@ class Commande
     public function removeBillet(\MyApp\BilletterieBundle\Entity\Billet $billet)
     {
         $this->billets->removeElement($billet);
+        $billet->setParent(null);
     }
 
     /**

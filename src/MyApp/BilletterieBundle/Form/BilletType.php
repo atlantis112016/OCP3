@@ -29,7 +29,7 @@ class BilletType extends AbstractType
                 'label' => 'Tarif réduit ',
                 'required'  =>  false))
             ->add('pays', CountryType::class, array(
-                'preferred_choices' => array('fr')
+                'preferred_choices' => array('FR')
             ))
         ;
     }

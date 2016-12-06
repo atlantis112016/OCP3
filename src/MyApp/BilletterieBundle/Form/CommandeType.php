@@ -53,22 +53,23 @@ class CommandeType extends AbstractType
                 'by_reference' => false,
                 'label' => false
             ]);
-         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+
+//   $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
     }
 
-    public function onPreSetData(FormEvent $event) {
-        $data = $event->getData();
-        $form = $event->getForm();
+//  public function onPreSetData(FormEvent $event) {
+//    $data = $event->getData();
+//    $form = $event->getForm();
 
-        if ($data->getBillets()->isEmpty()) {
-            $form->remove('billets');
-        } else {
-            $form->remove('dateVisite');
-            $form->remove('typeJournee');
-            $form->remove('nbBillet');
-            $form->remove('email');
-        }
-    }
+//     if ($data->getBillets()->isEmpty()) {
+//         $form->remove('billets');
+//     } else {
+//            $form->remove('dateVisite');
+//            $form->remove('typeJournee');
+//            $form->remove('nbBillet');
+//            $form->remove('email');
+//        }
+//    }
     
     /**
      * {@inheritdoc}
