@@ -5,6 +5,7 @@ namespace MyApp\BilletterieBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use MyApp\BilletterieBundle\Validator\DateVisite;
 
 /**
  * commande
@@ -44,6 +45,7 @@ class Commande
      * @var \DateTime
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
      * @Assert\DateTime(message="Ce champ doit être une date au format :dd-mm-yyyy")
+     * @DateVisite()
      * @ORM\Column(type="datetime")
      */
     private $dateVisite;

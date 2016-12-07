@@ -3,9 +3,8 @@
 namespace MyApp\BilletterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use MyApp\BilletterieBundle\Validator\Anniv;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use MyApp\BilletterieBundle\Validator\DateAnniv;
 
 /**
  * Billet
@@ -42,7 +41,7 @@ class Billet
     /**
      * @var \DateTime
      * @Assert\DateTime(message="Ce champ doit être une date au format :dd-mm-yyyy")
-     * @Anniv()
+     * @DateAnniv()
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateNaissance;

@@ -26,8 +26,6 @@ class CommandeController extends Controller
     {
         $cde = new Commande();
         $form = $this->createForm(CommandeType:: class, $cde);
-
-        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $getDateVisite = $form->get('dateVisite')->getData();
@@ -65,7 +63,7 @@ class CommandeController extends Controller
             $this->addFlash('notice', 'ETAPE 1 bien enregistrée');
             return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $cde->getId(),));
 
-        }
+
         return $this->render('MyAppBilletterieBundle:billetterie:etape1.html.twig', array(
             'form' => $form->createView(),
             ));
