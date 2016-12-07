@@ -2,6 +2,7 @@
 
 namespace MyApp\BilletterieBundle\Controller;
 
+use MyApp\BilletterieBundle\Entity\Commande;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,4 +82,32 @@ class TestController extends Controller
             "<br/> et la date d'aujourd'hui est: ".$date2."<br/> et votre date de naissance est: ".$dateAnniv2);
 
     }
+
+    /**
+     * @Route("/test3", name="my_app_billetterie_test3")
+     */
+    function validatorAction ()
+    {
+        $cde = new Commande();
+
+        $cde->setDatereserv(new \Datetime());  // Champ « date » OK
+        $cde->setEmail('abc');           // Champ « title » incorrect : moins de 10 caractères
+        //$advert->setContent('blabla');    // Champ « content » incorrect : on ne le définit pas
+        $cde->setDateVisite('A');            // Champ « author » incorrect : moins de 2 caractères
+
+        // On récupère le service validator
+        $validator = $this->get('validator');
+
+        // On déclenche la validation sur notre object
+        $listErrors = $validator->validate($cde);
+
+        // Si $listErrors n'est pas vide, on affiche les erreurs
+        if(count($listErrors) > 0) {
+            // $listErrors est un objet, sa méthode __toString permet de lister joliement les erreurs
+            return new Response('<br />'.$listErrors);
+        } else {
+            return new Response("L'annonce est valide !");
+        }
+    }
+
 }

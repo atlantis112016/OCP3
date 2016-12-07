@@ -3,7 +3,9 @@
 namespace MyApp\BilletterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use MyApp\BilletterieBundle\Validator\Anniv;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Billet
@@ -32,15 +34,15 @@ class Billet
 
     /**
      * @var string
-     * @Assert\NotBlank()(message="Ce champ ne peut pas être vide")
+     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $prenom;
 
     /**
      * @var \DateTime
-     * @Assert\DateTime(message="Ce champ doit être une date au format :dd/mm/yyyy")
-     *
+     * @Assert\DateTime(message="Ce champ doit être une date au format :dd-mm-yyyy")
+     * @Anniv()
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateNaissance;
@@ -53,7 +55,7 @@ class Billet
 
     /**
      * @var string
-     *
+     * @Assert\Country(message="Ce champ doit être de Type (ex: France = FR)")
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $pays;
@@ -61,7 +63,7 @@ class Billet
     /**
      * @var integer
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
     private $montant;
 

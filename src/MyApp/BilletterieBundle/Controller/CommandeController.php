@@ -54,10 +54,10 @@ class CommandeController extends Controller
 
                 // ---------- CREATION ET STOCKAGE DES BILLETS DANS L'ARRYCOLLECTION ----------
                 for ($i =  0; $i < $getNbreBillet; $i++) {
-                    $billet = new Billet();
-                    $billet->setCommande($cde);
-                    $em->persist($billet);
-                    $cde->addBillet($billet);
+                  //  $billet = new Billet();
+                  //  $billet->setCommande($cde);
+                  //  $em->persist($billet);
+                    $cde->addBillet(new Billet());
                 }
 
                 $em->flush();
@@ -99,10 +99,7 @@ class CommandeController extends Controller
         }
             // ---------- CREATION ET STOCKAGE DES BILLETS DANS L'ARRYCOLLECTION ---------//
             for ($i = 0; $i < $limitBillet; $i++) {
-                $billet = new Billet();
-                $billet->setCommande($actuCommande);
-                $em->persist($billet);
-                $actuCommande->addBillet($billet);
+                $actuCommande->addBillet(new Billet());
             }
             $em->flush();
            // dump($limitBillet);
@@ -132,8 +129,6 @@ class CommandeController extends Controller
 
         $listBillet = $em->getRepository('MyAppBilletterieBundle:Billet')
             ->findBy((array('commande'=>$id)));
-
-
 
         $form = $this->get('form.factory')->create(CommandeType::class, $actuCommande);
             $form->remove('dateVisite');
@@ -176,10 +171,10 @@ class CommandeController extends Controller
 
         // ---------- CREATION ET STOCKAGE DES BILLETS DANS L'ARRYCOLLECTION ----------
         for ($i =  $getNbBillet; $i < $nbBillet; $i++) {
-            $billet = new Billet();
-            $billet->setCommande($cde);
-            $em->persist($billet);
-            $cde->addBillet($billet);
+           // $billet = new Billet();
+           // $billet->setCommande($cde);
+          //  $em->persist($billet);
+            $cde->addBillet(new Billet());
         }
         $cde->setNbBillet($nbBillet);
         $em->flush();

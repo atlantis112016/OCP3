@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Commande
 {
+    const MAX_BILLETS = 1000;
     /**
      * @var int
      *
@@ -187,9 +188,17 @@ class Commande
      */
     public function setCodeReserv($codeReserv)
     {
+        $randomNumber = rand(1000, 5000);
+
+        $letters = [ 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        $i = rand(0, 25);
+        $letter = $letters[$i];
+        $time = time();
+
+        $codeReserv = 'LOUVRE' .  $randomNumber  . $letter . $time;
         $this->codeReserv = $codeReserv;
 
-        return $this;
+        //return $this;
     }
 
     /**
