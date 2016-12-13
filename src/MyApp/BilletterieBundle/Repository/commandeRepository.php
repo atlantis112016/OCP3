@@ -10,4 +10,6 @@ namespace MyApp\BilletterieBundle\Repository;
  */
 class CommandeRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }
+

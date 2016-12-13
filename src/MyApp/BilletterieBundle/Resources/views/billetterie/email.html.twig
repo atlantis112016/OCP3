@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Commande terminée - Musée du Louvre</title>
+
+    {# On charge le CSS de bootstrap depuis le site directement #}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet" />
+    <title>Merci de votre commande</title>
+</head>
+<body>
+<div class="row">
+    <h2><img src="{{ url }}" alt="logo Musee du louvre" /> Voici le récapitulatif de votre commande</h2>
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr>
+            <th> Numéro de votre Commande :</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="info">
+            <td>{{ recapCde.codeReserv }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr>
+            <th> Date de votre visite :</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="info">
+            <td>{{ recapCde.dateVisite|localizeddate('full', 'none') }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr>
+            <th> votre E-mail :</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="info">
+            <td>{{ recapCde.email }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <table class="table table-striped table-hover ">
+        <thead>
+        <tr>
+            <th colspan="4"> Informations sur vos billets : {{ recapCde.nbBillet }} billet(s)</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        {% for recapbillet in recapBillets %}
+            <tr>
+
+                <td class="text-left">{{ recapbillet.nom }} {{ recapbillet.prenom }}</td>
+                <td class="text-left">{{ recapbillet.dateNaissance|date('d/m/Y') }}</td>
+                <td class="text-right"> {{ recapbillet.montant }} € TTC</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tbody>
+        <tr class="info">
+            <th colspan="2" class="text-left">Total de votre commande</th>
+            <th class="text-right" id="total-price"> {{ recapCde.montantTotal }} € TTC</td>
+        </tr>
+        </tbody>
+    </table>
+        <p>Merci de présenter ce document à la caisse, ainsi que toutes pièces justificatives nécessaires pour les tarifs réduits.</p>
+</div>
+</body>
+
+</html>

@@ -13,15 +13,11 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class DateVisiteValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate( $value, Constraint $constraint)
     {
         $date1 = new \DateTime('now');
-        if ($date1 <= $value) {
-            $this->context
-                ->buildViolation($constraint->message)
-                ->setParameters(array('%string%' => $value))
-                ->addViolation()
-            ;
+        if ($value->format('d-m-Y') < $date1->format('d-m-Y')) {
+            $this->context->addViolation($constraint->message);
         }
     }
 }

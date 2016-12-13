@@ -1,22 +1,38 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: MisterX
- * Date: 29/11/2016
- * Time: 10:41
+ * Date: 09/12/2016
+ * Time: 09:53
  */
-class limiteBillet
+
+namespace MyApp\BilletterieBundle\Services;
+
+use Doctrine\ORM\EntityManagerInterface;
+use MyApp\BilletterieBundle\Entity\Commande;
+use Symfony\Component\HttpFoundation\Response;
+
+class LimiteBillet
 {
-    // Renvoie true si 1000 billets ont été vendus à cette date
-    public function isMilleBillets($listReserv, $quantity)
+    public function __construct(EntityManagerInterface $em)
     {
-        $totalBillet = 0;
+        $this->em = $em;
+    }
+    public function isLimiteBillet(\DateTime $dateVisite, $nbBillet)
+    {
+        //--------- Récupération du seuil max ------//
+        $maxi = Commande::MAX_BILLETS;
+
+        //------ Liste les billets déjà enregistrés à la date du jour ---------//
+        $listReserv = $this->em->getRepository('MyAppBilletterieBundle:Commande')
+            ->findBy(array('dateVisite' => $dateVisite));
+
+        $totalBillet=0;
+
         foreach ($listReserv as $command) {
-            $billetQuantite = $command->getQuantity();
+            $billetQuantite = $command->getNbBillet();
             $totalBillet += $billetQuantite;
         }
-
-        return (($totalBillet + $quantity) > 1000 );
+            return (($totalBillet + $nbBillet) > $maxi);
     }
 }

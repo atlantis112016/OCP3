@@ -3,6 +3,7 @@
 namespace MyApp\BilletterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use MyApp\BilletterieBundle\Validator\JoursInterdit;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use MyApp\BilletterieBundle\Validator\DateVisite;
@@ -15,7 +16,11 @@ use MyApp\BilletterieBundle\Validator\DateVisite;
  */
 class Commande
 {
-    const MAX_BILLETS = 1000;
+    const MAX_BILLETS = 3;
+    const STATUT_ENCOURS = 'En cours';
+    const STATUT_PAIEMENT = 'Paiement effectué';
+    const STATUT_AVORTE = 'Commande avortée';
+    const STATUT_TERMINE = 'Commande Terminée';
     /**
      * @var int
      *
@@ -44,8 +49,9 @@ class Commande
     /**
      * @var \DateTime
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
-     * @Assert\DateTime(message="Ce champ doit être une date au format :dd-mm-yyyy")
+     * @Assert\DateTime(message="Ce champ doit être une date au format :d-m-Y")
      * @DateVisite()
+     * @JoursInterdit()
      * @ORM\Column(type="datetime")
      */
     private $dateVisite;
@@ -190,17 +196,9 @@ class Commande
      */
     public function setCodeReserv($codeReserv)
     {
-        $randomNumber = rand(1000, 5000);
-
-        $letters = [ 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-        $i = rand(0, 25);
-        $letter = $letters[$i];
-        $time = time();
-
-        $codeReserv = 'LOUVRE' .  $randomNumber  . $letter . $time;
         $this->codeReserv = $codeReserv;
 
-        //return $this;
+        return $this;
     }
 
     /**
@@ -267,6 +265,7 @@ class Commande
     {
         $this->billets = new ArrayCollection();
         $this->dateReserv = new \DateTime();
+        $this->codeReserv = $this->genCodeResa();
     }
 
     /**
@@ -374,5 +373,19 @@ class Commande
     public function getTypeJournee()
     {
         return $this->typeJournee;
+    }
+
+    public function genCodeResa()
+    {
+        $randomNumber = rand(1000, 5000);
+
+        $letters = [ 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        $i = rand(0, 25);
+        $letter = $letters[$i];
+
+        $time = time();
+        $codeReserv = 'LOUVRE' .  $randomNumber  . $letter . $time;
+
+        return $codeReserv;
     }
 }

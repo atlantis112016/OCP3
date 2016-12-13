@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: MisterX
+ * User: Fabienne BERNARD
  * Date: 07/12/2016
  * Time: 14:26
  */
@@ -15,15 +15,11 @@ class DateAnnivValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
+        dump($value);
         $date1 = new \DateTime('now');
-        if ($value >= $date1) {
-           // $this->context->addViolation($constraint->message);
-            $this->context
-            ->buildViolation($constraint->message)
-                ->setParameters(array('%string%' => $value))
-                ->addViolation()
-            ;
-        }
+        if ($value->format('d-m-Y') >= $date1->format('d-m-Y')) {
+           $this->context->addViolation($constraint->message);
+         }
     }
 
 }

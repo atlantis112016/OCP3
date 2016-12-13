@@ -10,4 +10,17 @@ namespace MyApp\BilletterieBundle\Repository;
  */
 class BilletRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function sumMontant($id)
+    {
+        $qb = $this->createQueryBuilder('b');
+        $qb->select('SUM(b.montant) AS montantTotal')
+            ->where('b.commande = :id')
+            ->setParameter(':id', $id);
+
+        return $qb
+            ->getQuery()
+            ->getSingleScalarResult()
+            //->getResult()
+            ;
+    }
 }

@@ -8,41 +8,66 @@
 
 namespace MyApp\BilletterieBundle\Services;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class Tarifs
 {
-    public function Calcul($billet, $age)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+    // On injecte l'EntityManager
+    public function __construct(EntityManagerInterface $em)
     {
+        $this->em = $em;
+    }
+    public function calculTarifs($id)
+    {
+        //---------------Recherche de la commande dans billet--------------------//
+        $listeBillet = $this->em->getRepository('MyAppBilletterieBundle:Billet')
+            ->findBy((array('commande' => $id)));
 
-        switch ($billet) {
+        //--------------------- Date du jour ---------------------//
+        $dateNow = new \DateTime('now');
 
-            case ($billet->getTarifReduit() === true):
-                $billet->setPrix('10');
-                $billet->setTarif('Reduit');
-                break;
+        //----------------Boucle sur les billets------------------//
+       foreach ( $listeBillet as $billet) {
 
-            case ($age >= 60):
-                $billet->setPrix('12');
-                $billet->setTarif('Senior');
-                break;
+           //-------------Conversion date de naissance en âge---------//
+           $dateNo = $billet->getDateNaissance();
+           $age = $dateNo->diff($dateNow)->format('%y');
 
-            case ($age > 12 && $age < 60):
-                $billet->setPrix('16');
-                $billet->setTarif('Normal');
-                break;
+           //-------------Récupération de l'état de Tarif réduit----------//
+           $tReduit = $billet->getTarifReduit();
 
-            case ($age >= 4 && $age <= 12):
-                $billet->setPrix('8');
-                $billet->setTarif('Enfant');
-                break;
+           //----------------Condition pour trouver le bon montant et le bon type de tarif--------------//
+           If ($tReduit) {
+               $nomType = 'reduit';
+           } else {
+               switch ($age) {
+                   case ($age >= 60):
+                       $nomType = 'Senior';
+                       break;
+                   case ($age > 12 && $age < 60):
+                       $nomType = 'normal';
+                       break;
+                   case ($age >= 4 && $age <= 11):
+                       $nomType = 'enfant';
+                       break;
+                   case ($age < 4):
+                       $nomType = 'gratuit';
+                       break;
+               }
+           }
 
-            case ($age < 4):
-                $billet->setPrix('0');
-                $billet->setTarif('Jeune enfant');
-                break;
+           //------------------- Récupération du montant par rapport au nom du type -------------//
+           $listTarif = $this->em->getRepository('MyAppBilletterieBundle:TypeTarif')
+               ->findOneBy((array('nomType' => $nomType)));
 
-        }
+           //--------------------- Mise à jour du champ Montant dans Billet ---------------------//
+           $billet->setMontant($listTarif->getMontant());
+           $this->em->flush();
+       }
     }
 
 }

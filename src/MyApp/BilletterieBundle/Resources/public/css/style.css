@@ -879,7 +879,9 @@ input {
 .form-group {
 	text-align: left
 }
-
 .separation {
 	border-bottom:2px dashed #75757F
+}
+select {
+	width:50px;
 }

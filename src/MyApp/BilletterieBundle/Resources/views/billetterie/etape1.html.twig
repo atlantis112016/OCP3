@@ -22,9 +22,7 @@
                 {{ form_start(form) }}
                 {{ form_errors(form) }}
 
-                    {% for message in app.session.flashbag.get('info') %}
-                        <div class="alert alert-danger text-center">{{ message }}</div>
-                    {% endfor %}
+                    {% include'MyAppBilletterieBundle:billetterie:flashmessage.html.twig' %}
                      <div class="form-group">
                         {{ form_label(form.dateVisite,'Date de visite : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
                         <div class="cols-sm-10">

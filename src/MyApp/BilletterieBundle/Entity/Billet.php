@@ -40,7 +40,7 @@ class Billet
 
     /**
      * @var \DateTime
-     * @Assert\DateTime(message="Ce champ doit être une date au format :dd-mm-yyyy")
+     * @Assert\DateTime(message="Ce champ doit être une date au format :d-m-Y")
      * @DateAnniv()
      * @ORM\Column(type="datetime", nullable=true)
      */
