@@ -4,6 +4,7 @@ namespace MyApp\BilletterieBundle\Controller;
 
 use MyApp\BilletterieBundle\Entity\Billet;
 use MyApp\BilletterieBundle\Entity\Commande;
+use MyApp\BilletterieBundle\Form\CommandeCollectionBilletType;
 use MyApp\BilletterieBundle\Form\CommandeEditType;
 use MyApp\BilletterieBundle\Form\CommandeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -42,7 +43,7 @@ class CommandeController extends Controller
 
                  if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), $getNbreBillet) === true)) {
                     throw $this->createNotFoundException(
-                        'La limite de vente de billet pour le ' . $getDateVisite->format('d/m/Y') . ' est dépassée. Merci de choisir une autre date '
+                        'La limite de vente de billet pour le ' . $cde->getDateVisite()->format('d/m/Y') . ' est dépassée. Merci de choisir une autre date '
                     );
                 }
 
@@ -61,13 +62,13 @@ class CommandeController extends Controller
                 $em->persist($cde);
 
                 // ---------- CREATION ET STOCKAGE DES BILLETS DANS L'ARRYCOLLECTION ----------
-                for ($i =  0; $i < $getNbreBillet; $i++) {
+                for ($i =  0; $i < $cde->getNbBillet(); $i++) {
                     $cde->addBillet(new Billet());
                 }
 
                 $em->flush();
 
-            $this->addFlash('notice', 'ETAPE 1 bien enregistrée');
+            $this->addFlash('Info', 'ETAPE 1 bien enregistrée');
             return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $cde->getId(),));
             }
 
@@ -80,17 +81,10 @@ class CommandeController extends Controller
      * @Route("/cde/etape1/{id}", name="my_app_billetterie_editcde", requirements={"id" = "\d+"})
      * Mise à jour de l'étape1 quand le visisteur clique sur précédent
      */
-    public function editCdeAction(Request $request, $id)
+    public function editCdeAction(Request $request, Commande $actuCommande)
     {
-        $em = $this->getDoctrine()->getManager();
-        $actuCommande = $em->getRepository('MyAppBilletterieBundle:Commande')
-            ->findOneBy(array('id' => $id));
         $nbreBillet = $actuCommande->getNbBillet();
 
-        if (null === $actuCommande) {
-            throw new Exception("Cette commande n'existe pas !");
-            return $this->redirectToRoute('my_app_billetterie_cde');
-        }
         $form = $this->get('form.factory')->create(CommandeEditType::class, $actuCommande);
         $form -> handleRequest(($request));
 
@@ -104,7 +98,7 @@ class CommandeController extends Controller
             $limitBillet = $formBillet - $nbreBillet;
             if ($limitBillet < 0){
                 $this->addFlash('notice', 'Le nombre de billet doit être supérieur à votre choix précédent');
-                return $this->redirectToRoute('my_app_billetterie_editcde', array('id' => $id,));
+                return $this->redirectToRoute('my_app_billetterie_editcde', array('id' => $actuCommande->getId(),));
             }
 
             //---------------------- Test Limite Billet - utilisation du service ------------------//
@@ -126,10 +120,11 @@ class CommandeController extends Controller
             for ($i = 0; $i < $limitBillet; $i++) {
                 $actuCommande->addBillet(new Billet());
             }
+            $em = $this->getDoctrine()->getManager();
             $em->flush();
 
             $this->addFlash('info', 'ETAPE 1 bien modifié');
-            return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $id,));
+            return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $actuCommande->getId(),));
 
         }
         return $this->render('MyAppBilletterieBundle:billetterie:etape1.html.twig', array(
@@ -140,34 +135,27 @@ class CommandeController extends Controller
      * @Route("/cde/etape2/{id}", name="my_app_billetterie_billet", requirements={"id" = "\d+"})
      * Mise à jour Billet
      */
-    public function billetAction(Request $request, $id)
+    public function billetAction(Request $request, Commande $actuCommande)
     {
-        $em = $this->getDoctrine()->getManager();
-        $actuCommande = $em->getRepository('MyAppBilletterieBundle:Commande')
-            ->findOneBy(array('id' => $id));
+        $listBillet = $actuCommande->getBillets();
 
-        if (null === $actuCommande) {
-            throw new Exception("Cette commande n'existe pas !");
-        }
-
-        $listBillet = $em->getRepository('MyAppBilletterieBundle:Billet')
-            ->findBy((array('commande'=>$id)));
-
-        $form = $this->get('form.factory')->create(CommandeType::class, $actuCommande);
-            $form->remove('dateVisite');
-            $form->remove('typeJournee');
-            $form->remove('nbBillet');
-            $form->remove('email');
+        $form = $this->get('form.factory')->create(CommandeCollectionBilletType::class, $actuCommande);
+           // $form->remove('dateVisite');
+           // $form->remove('typeJournee');
+           // $form->remove('nbBillet');
+           // $form->remove('email');
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
                // $em->persist($actuCommande);
                 $em->flush();
-            }
-            $this->addFlash('info', 'ETAPE 2 bien enregistrée');
-            return $this->redirectToRoute('my_app_billetterie_recap', array('id' => $actuCommande->getId()));
 
+            $this->addFlash('info', 'ETAPE 2 bien enregistrée');
+
+            return $this->redirectToRoute('my_app_billetterie_recap', array('id' => $actuCommande->getId()));
+            }
         }
         return $this->render('MyAppBilletterieBundle:billetterie:etape2.html.twig', array(
             'id' => $actuCommande->getId(),
@@ -238,51 +226,20 @@ class CommandeController extends Controller
      * @Route("/cde/etape3/{id}", name="my_app_billetterie_recap", requirements={"id" = "\d+"})
      * Récap de la commmande avant billet et mise à jour des tarifs par billet et calcul montant total
      */
-    public function recapAction(Request $request, $id )
+    public function recapAction(Request $request, Commande $actuCde )
     {
-       $em = $this->getDoctrine()->getManager();
-       //---------------- Récupération de la commande ----------------//
-       $ActuCde = $em->getRepository('MyAppBilletterieBundle:Commande')
-            ->findOneBy(array('id' => $id));
-
-       //------------------------- Exception si commande null -------------------//
-        if (null === $ActuCde) {
-            throw new Exception("Cette commande n'existe pas !");
-        }
 
         //------------------- Listing des billets par rapport à la commande ------------//
-           $listeBillets = $em->getRepository('MyAppBilletterieBundle:Billet')
-            ->findBy(array('commande' => $ActuCde));
-
-        //------------------------- Exception si listing null -------------------//
-        if (null === $listeBillets) {
-            throw new Exception("Il n'y a pas de billets !");
-        }
-
-        //------------------------- listing des tarifs -------------------//
-            $listeTypes = $em->getRepository('MyAppBilletterieBundle:TypeTarif')
-            -> findBy(array('id' => $ActuCde->getTypeJournee())
-            );
-
-        //------------------------- Exception si listing null -------------------//
-        if (null === $listeTypes) {
-            throw new Exception("Pas de type correspondant");
-        }
+           $listeBillets = $actuCde->getBillets();
 
         //---------------- Calcul des tarifs des billets appel du service Tarifs.php ---------------//
         $calculTarif = $this->container->get('my_app_billetterie.tarifs');
-        $calculTarif->calculTarifs($id);
-
-        //---------------- Calcul du montant total de la commande appel du service TotalCde.php ---------------//
-        $totalCde = $this->container->get('my_app_billetterie.totalcde');
-        $totalCde->totalCde($id);
+        $calculTarif->calculTarifs($actuCde);
 
            return $this->render('MyAppBilletterieBundle:billetterie:etape3.html.twig', array(
-            'recapCde' => $ActuCde,
-            'recapBillets' => $listeBillets,
-            'listeType' => $listeTypes,
+            'id' => $actuCde->getId(),
+            'recapCde' => $actuCde,
             'stripe_public_key' => $this->getParameter("stripe_public_key"),
-            'id' => $ActuCde->getId()
            ));
     }
 
@@ -292,7 +249,6 @@ class CommandeController extends Controller
      */
     public function paiementAction(Request $request, $id)
     {
-
             $secretKey = $this->getParameter('stripe_secret_key');
             $error = false ;
         //$paiement = $this->container->get('my_app_billetterie.stripe');

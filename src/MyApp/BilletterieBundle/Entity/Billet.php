@@ -73,8 +73,8 @@ class Billet
       private $commande;
 
       /**
-       * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\TypeTarif", cascade={"persist"})
-       *
+       * @var string
+       * @ORM\Column(type="string", length=15, nullable=true)
        */
       private $typeTarif;
 
@@ -212,11 +212,11 @@ class Billet
     /**
      * Set typeTarif
      *
-     * @param \MyApp\BilletterieBundle\Entity\TypeTarif $typeTarif
+     * @param string $typeTarif
      *
      * @return Billet
      */
-    public function setTypeTarif(\MyApp\BilletterieBundle\Entity\TypeTarif $typeTarif = null)
+    public function setTypeTarif($typeTarif)
     {
         $this->typeTarif = $typeTarif;
 
@@ -226,7 +226,7 @@ class Billet
     /**
      * Get typeTarif
      *
-     * @return \MyApp\BilletterieBundle\Entity\TypeTarif
+     * @return string
      */
     public function getTypeTarif()
     {
@@ -257,30 +257,7 @@ class Billet
         return $this->isTarifReduit;
     }
 
-    /**
-     * Set montantBillet
-     *
-     * @param integer $montantBillet
-     *
-     * @return Billet
-     */
-    public function setMontantBillet($montantBillet)
-    {
-           $this->montantBillet = $montantBillet;
-        return $this;
-    }
-
-    /**
-     * Get montantBillet
-     *
-     * @return integer
-     */
-    public function getMontantBillet()
-    {
-        return $this->montantBillet;
-    }
-
-    /**
+     /**
      * Set isTarifReduit
      *
      * @param boolean $isTarifReduit

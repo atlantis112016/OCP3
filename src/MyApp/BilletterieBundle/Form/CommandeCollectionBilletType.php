@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 
-class CommandeType extends AbstractType
+class CommandeCollectionBilletType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -23,32 +23,14 @@ class CommandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
-            ->add('email',EmailType::class,
-                array( 'required' => true ))
-            ->add('dateVisite', DateTimeType::class, array('widget'=> 'single_text'))
-            ->add('typeJournee',ChoiceType::class, array('choices'  => array(
-        'Journée' => 'Journee',
-        'Demi-journée' => 'Demi-journee'),
-        'choices_as_values' => true))
-             ->add('nbBillet', ChoiceType::class,
-                array( 'required' => true,
-                    'label'  => 'Choisir le nombre de billet',
-                    'choices' => array(
-                        '1' => 1,
-                        '2' => 2,
-                        '3' => 3,
-                        '4' => 4,
-                        '5' => 5,
-                        '6' => 6,
-                        '7' => 7,
-                        '8' => 8,
-                        '9' => 9,
-                        '10' => 10,
-                    )))
-                    ;
+            ->add('billets', CollectionType::class, [
+                'entry_type' => BilletType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false
+            ]);
     }
-
     /**
      * {@inheritdoc}
      */

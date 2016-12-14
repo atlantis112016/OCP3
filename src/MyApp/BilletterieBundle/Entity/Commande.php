@@ -2,6 +2,7 @@
 
 namespace MyApp\BilletterieBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use MyApp\BilletterieBundle\Validator\JoursInterdit;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,10 +18,10 @@ use MyApp\BilletterieBundle\Validator\DateVisite;
 class Commande
 {
     const MAX_BILLETS = 3;
-    const STATUT_ENCOURS = 'En cours';
-    const STATUT_PAIEMENT = 'Paiement effectué';
-    const STATUT_AVORTE = 'Commande avortée';
-    const STATUT_TERMINE = 'Commande Terminée';
+    const STATUT_ENCOURS = 1;
+    const STATUT_PAIEMENT = 2;
+    const STATUT_AVORTE = 3;
+    const STATUT_TERMINE = 4;
     /**
      * @var int
      *
@@ -57,7 +58,7 @@ class Commande
     private $dateVisite;
 
     /**
-     * @var string
+     * @var integer
      *
      * @ORM\Column(type="decimal", scale=2)
      */
@@ -78,16 +79,16 @@ class Commande
     private $codeReserv;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer", length=255)
      */
     private $statut;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $tokenStripe;
 
@@ -100,7 +101,7 @@ class Commande
 
    /**
     * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet",mappedBy="commande", cascade={"persist"}, orphanRemoval=true)
-    * 
+    *
     */
       private $billets;
 
@@ -296,7 +297,7 @@ class Commande
     /**
      * Get billets
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection|Billet[]
      */
     public function getBillets()
     {

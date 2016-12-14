@@ -9,6 +9,7 @@
 namespace MyApp\BilletterieBundle\Services;
 
 use Doctrine\ORM\EntityManagerInterface;
+use MyApp\BilletterieBundle\Entity\Commande;
 
 class Tarifs
 {
@@ -21,53 +22,53 @@ class Tarifs
     {
         $this->em = $em;
     }
-    public function calculTarifs($id)
+    public function calculTarifs(Commande $actuCde)
     {
         //---------------Recherche de la commande dans billet--------------------//
-        $listeBillet = $this->em->getRepository('MyAppBilletterieBundle:Billet')
-            ->findBy((array('commande' => $id)));
+        $listeBillet = $actuCde->getBillets();
 
         //--------------------- Date du jour ---------------------//
         $dateNow = new \DateTime('now');
-
+        $montantTotal = 0;
         //----------------Boucle sur les billets------------------//
        foreach ( $listeBillet as $billet) {
 
            //-------------Conversion date de naissance en âge---------//
            $dateNo = $billet->getDateNaissance();
            $age = $dateNo->diff($dateNow)->format('%y');
-
-           //-------------Récupération de l'état de Tarif réduit----------//
-           $tReduit = $billet->getTarifReduit();
-
+            dump($age);
            //----------------Condition pour trouver le bon montant et le bon type de tarif--------------//
-           If ($tReduit) {
-               $nomType = 'reduit';
+           if ($billet->getTarifReduit() && $age > 11) {
+               $billet->setTypeTarif('reduit');
+               $billet->setMontant(10);
            } else {
                switch ($age) {
                    case ($age >= 60):
-                       $nomType = 'Senior';
+                       $billet->setTypeTarif('Senior');
+                       $billet->setMontant(12);
                        break;
                    case ($age > 12 && $age < 60):
-                       $nomType = 'normal';
+                       $billet->setTypeTarif('normal');
+                       $billet->setMontant(16);
                        break;
                    case ($age >= 4 && $age <= 11):
-                       $nomType = 'enfant';
+                       $billet->setTypeTarif('enfant');
+                       $billet->setMontant(8);
                        break;
                    case ($age < 4):
-                       $nomType = 'gratuit';
+                       $billet->setTypeTarif('gratuit');
+                       $billet->setMontant(0);
                        break;
                }
            }
-
-           //------------------- Récupération du montant par rapport au nom du type -------------//
-           $listTarif = $this->em->getRepository('MyAppBilletterieBundle:TypeTarif')
-               ->findOneBy((array('nomType' => $nomType)));
-
-           //--------------------- Mise à jour du champ Montant dans Billet ---------------------//
-           $billet->setMontant($listTarif->getMontant());
-           $this->em->flush();
+           dump($age, $age < 4);
+           $montantTotal += $billet->getMontant();
        }
+      if ($actuCde->getTypeJournee() === 'Demi-journee'){
+           $actuCde->setMontantTotal($montantTotal/2);
+      }
+        $actuCde->setMontantTotal($montantTotal);
+        $this->em->flush();
     }
 
 }
