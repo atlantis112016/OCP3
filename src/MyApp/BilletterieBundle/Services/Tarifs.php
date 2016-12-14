@@ -55,10 +55,14 @@ class Tarifs
                        $billet->setTypeTarif('enfant');
                        $billet->setMontant(8);
                        break;
-                   case ($age < 4):
-                       $billet->setTypeTarif('gratuit');
-                       $billet->setMontant(0);
-                       break;
+                  // case ($age < 4):
+                  //     $billet->setTypeTarif('gratuit');
+                  //     $billet->setMontant(0);
+                  //     break;
+               }
+               if ($age < 4){
+                   $billet->setTypeTarif('gratuit');
+                   $billet->setMontant(0);
                }
            }
            dump($age, $age < 4);
