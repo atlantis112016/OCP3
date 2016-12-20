@@ -18,7 +18,7 @@ class LimiteBillet
     {
         $this->em = $em;
     }
-    public function isLimiteBillet(\DateTime $dateVisite, $nbBillet)
+    public function isLimiteBillet(\DateTime $dateVisite, $nbBillet, $updateEtape)
     {
         //--------- Récupération du seuil max ------//
         $maxi = Commande::MAX_BILLETS;
@@ -33,6 +33,14 @@ class LimiteBillet
             $billetQuantite = $command->getNbBillet();
             $totalBillet += $billetQuantite;
         }
+
+       // dump($totalBillet); die();
+        if ($updateEtape === 1) {
             return (($totalBillet + $nbBillet) > $maxi);
+        } else {
+            return (($totalBillet) > $maxi);
+        }
+
+
     }
 }

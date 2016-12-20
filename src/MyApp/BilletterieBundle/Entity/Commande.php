@@ -90,11 +90,11 @@ class Commande
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $tokenStripe;
+    private $tokenStripe = '00000000000000';
 
      /**
      * @var integer
-     *
+     * @Assert\Range(min=1, max=10)
      * @ORM\Column(type="integer")
      */
     private $nbBillet;

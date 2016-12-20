@@ -16,7 +16,7 @@
 <body>
 <div class="row">
     <h2><img src="{{ url }}" alt="logo Musee du louvre" /> Voici le récapitulatif de votre commande</h2>
-    <table class="table table-striped table-hover ">
+    <table class="table table-striped table-hover" style="padding: 0px 20px 0px 20px">
         <thead>
         <tr>
             <th> Numéro de votre Commande :</th>
@@ -30,7 +30,8 @@
     </table>
 </div>
 <div class="row">
-    <table class="table table-striped table-hover ">
+
+    <table class="table table-striped table-hover" style="padding: 0px 20px 0px 20px">
         <thead>
         <tr>
             <th> Date de votre visite :</th>
@@ -44,7 +45,7 @@
     </table>
 </div>
 <div class="row">
-    <table class="table table-striped table-hover ">
+    <table class="table table-striped table-hover" style="padding: 0px 20px 0px 20px">
         <thead>
         <tr>
             <th> votre E-mail :</th>
@@ -58,25 +59,30 @@
     </table>
 </div>
 <div class="row">
-    <table class="table table-striped table-hover ">
+    <table class="table table-striped table-hover" style="padding: 0px 20px 0px 20px">
         <thead>
         <tr>
-            <th colspan="4"> Informations sur vos billets : {{ recapCde.nbBillet }} billet(s)</th>
+            <th colspan="5"> Informations sur vos billets : {{ recapCde.nbBillet }} billet(s) {{ recapCde.typeJournee }}</th>
         </tr>
         </thead>
         <tbody id="table-body">
-        {% for recapbillet in recapBillets %}
+        {% for recapbillet in recapCde.billets %}
             <tr>
 
                 <td class="text-left">{{ recapbillet.nom }} {{ recapbillet.prenom }}</td>
                 <td class="text-left">{{ recapbillet.dateNaissance|date('d/m/Y') }}</td>
+                {% if (recapbillet.isTarifReduit > 0) %}
+                    <td class="text-left">Tarif réduit</td>
+                {% else %}
+                    <td class="text-left">Sans tarif réduit</td>
+                {% endif %}
                 <td class="text-right"> {{ recapbillet.montant }} € TTC</td>
             </tr>
         {% endfor %}
         </tbody>
         <tbody>
         <tr class="info">
-            <th colspan="2" class="text-left">Total de votre commande</th>
+            <th colspan="3" class="text-left">Total de votre commande</th>
             <th class="text-right" id="total-price"> {{ recapCde.montantTotal }} € TTC</td>
         </tr>
         </tbody>

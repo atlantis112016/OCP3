@@ -36,24 +36,40 @@ class Tarifs
            //-------------Conversion date de naissance en âge---------//
            $dateNo = $billet->getDateNaissance();
            $age = $dateNo->diff($dateNow)->format('%y');
-            dump($age);
+            //dump($age);
            //----------------Condition pour trouver le bon montant et le bon type de tarif--------------//
            if ($billet->getTarifReduit() && $age > 11) {
                $billet->setTypeTarif('reduit');
-               $billet->setMontant(10);
+               if ($actuCde->getTypeJournee() === 'Demi-journee') {
+                   $billet->setMontant(10/2);
+               } else {
+                       $billet->setMontant(10);
+               }
            } else {
                switch ($age) {
                    case ($age >= 60):
                        $billet->setTypeTarif('Senior');
-                       $billet->setMontant(12);
+                       if ($actuCde->getTypeJournee() === 'Demi-journee') {
+                           $billet->setMontant(12/2);
+                       } else {
+                           $billet->setMontant(12);
+                       }
                        break;
                    case ($age > 12 && $age < 60):
                        $billet->setTypeTarif('normal');
-                       $billet->setMontant(16);
+                       if ($actuCde->getTypeJournee() === 'Demi-journee') {
+                           $billet->setMontant(16/2);
+                       } else {
+                           $billet->setMontant(16);
+                       }
                        break;
                    case ($age >= 4 && $age <= 11):
                        $billet->setTypeTarif('enfant');
-                       $billet->setMontant(8);
+                       if ($actuCde->getTypeJournee() === 'Demi-journee') {
+                           $billet->setMontant(8/2);
+                       } else {
+                           $billet->setMontant(8);
+                       }
                        break;
                   // case ($age < 4):
                   //     $billet->setTypeTarif('gratuit');
@@ -62,16 +78,19 @@ class Tarifs
                }
                if ($age < 4){
                    $billet->setTypeTarif('gratuit');
+
                    $billet->setMontant(0);
                }
            }
-           dump($age, $age < 4);
+
            $montantTotal += $billet->getMontant();
        }
-      if ($actuCde->getTypeJournee() === 'Demi-journee'){
-           $actuCde->setMontantTotal($montantTotal/2);
-      }
+
+//      if ($actuCde->getTypeJournee() === 'Demi-journee'){
+  //         $actuCde->setMontantTotal($montantTotal/2);
+    //  } else {
         $actuCde->setMontantTotal($montantTotal);
+      // }
         $this->em->flush();
     }
 

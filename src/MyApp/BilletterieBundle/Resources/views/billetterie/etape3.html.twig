@@ -11,10 +11,10 @@
             <div class="intro-lead-in">
 
                 <ul class="nav nav-tabs" id="tab">
-                    <li class="nav col-md-3 active" id="Cde"><a href="{{ path('my_app_billetterie_cde',{'id': id}) }}" id="ongletJour" data-toggle="tab">ETAPE 1</a></li>
-                    <li class="nav col-md-3 active" id="Cde"><a href="{{ path('my_app_billetterie_billet',{'id': id}) }}" id="ongletJour" data-toggle="tab">ETAPE 2</a></li>
-                    <li class="nav col-md-3 active" id="Recap"><a href="{{ path('my_app_billetterie_recap',{'id': id}) }}" id="ongletPaiement" data-toggle="tab">ETAPE 3</a></li>
-                    <li class="nav col-md-3 disabled" id="Paiement"><a href="{{ path('my_app_billetterie_paiement',{'id': id}) }}" id="ongletConfirmation" data-toggle="tab">PAIEMENT</a></li>
+                    <li class="nav col-md-3 active" id="Cde"><a href="{{ path('my_app_billetterie_cde',{'id': recapCde.id}) }}" id="ongletJour" data-toggle="tab">ETAPE 1</a></li>
+                    <li class="nav col-md-3 active" id="Cde"><a href="{{ path('my_app_billetterie_billet',{'id': recapCde.id}) }}" id="ongletJour" data-toggle="tab">ETAPE 2</a></li>
+                    <li class="nav col-md-3 active" id="Recap"><a href="{{ path('my_app_billetterie_recap',{'id': recapCde.id}) }}" id="ongletPaiement" data-toggle="tab">ETAPE 3</a></li>
+                    <li class="nav col-md-3 disabled" id="Paiement"><a href="{{ path('my_app_billetterie_paiement',{'id': recapCde.id}) }}" id="ongletConfirmation" data-toggle="tab">PAIEMENT</a></li>
 
                 <div class="row">
                 {% include'MyAppBilletterieBundle:billetterie:flashmessage.html.twig' %}
@@ -63,22 +63,27 @@
                     <table class="table table-striped table-hover ">
                         <thead>
                         <tr>
-                            <th colspan="4"> Informations sur vos billets : {{ recapCde.nbBillet }} billet(s)</th>
+                            <th colspan="5"> Informations sur vos billets : {{ recapCde.nbBillet }} billet(s) {{ recapCde.typeJournee }}</th>
                         </tr>
                         </thead>
                         <tbody id="table-body">
-                            {% for recapbillet in recapBillets %}
+                            {% for recapbillet in recapCde.billets %}
                                 <tr>
 
                                     <td class="text-left">{{ recapbillet.nom }} {{ recapbillet.prenom }}</td>
                                     <td class="text-left">{{ recapbillet.dateNaissance|date('d/m/Y') }}</td>
+                                    {% if (recapbillet.isTarifReduit > 0) %}
+                                        <td class="text-left">Tarif réduit</td>
+                                     {% else %}
+                                         <td class="text-left">Sans tarif réduit</td>
+                                     {% endif %}
                                     <td class="text-right"> {{ recapbillet.montant }} € TTC</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                         <tbody>
                             <tr class="info">
-                                <th colspan="2" class="text-left">Total de votre commande</th>
+                                <th colspan="3" class="text-left">Total de votre commande</th>
                                 <th class="text-right" id="total-price"> {{ recapCde.montantTotal }} € TTC</td>
                             </tr>
                         </tbody>

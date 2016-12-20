@@ -16,7 +16,7 @@
                     <li class="nav col-md-3 disabled" id="liConfirmation"><a href="#" id="ongletConfirmation" data-toggle="tab">RECAPITULATIF</a></li>
                 </ul>
                 {% include'MyAppBilletterieBundle:billetterie:flashmessage.html.twig' %}
-                <div><h4>Date de votre visite : {{ dateVisite|date('D d M Y') }} </h4>
+                <div><h4>Date de votre visite : {{ dateVisite|localizeddate('full', 'none') }} </h4>
                         <p><h4><a href={{ path('my_app_billetterie_addbillet',{'id': id}) }}>
                                 <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Ajouter un billet</a></h4></p>
                 </div>
