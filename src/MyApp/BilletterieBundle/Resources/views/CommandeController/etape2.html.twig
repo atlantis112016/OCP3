@@ -15,7 +15,7 @@
                     <li class="nav col-md-3 disabled" id="liPaiement"><a href="#" id="ongletPaiement" data-toggle="tab">ETAPE 3</a></li>
                     <li class="nav col-md-3 disabled" id="liConfirmation"><a href="#" id="ongletConfirmation" data-toggle="tab">RECAPITULATIF</a></li>
                 </ul>
-                {% include'MyAppBilletterieBundle:billetterie:flashmessage.html.twig' %}
+                {% include'MyAppBilletterieBundle:CommandeController:flashmessage.html.twig' %}
                 <div><h4>Date de votre visite : {{ dateVisite|localizeddate('full', 'none') }} </h4>
                         <p><h4><a href={{ path('my_app_billetterie_addbillet',{'id': id}) }}>
                                 <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Ajouter un billet</a></h4></p>

@@ -17,7 +17,7 @@ use MyApp\BilletterieBundle\Validator\DateVisite;
  */
 class Commande
 {
-    const MAX_BILLETS = 3;
+    const MAX_BILLETS = 1000;
     const STATUT_ENCOURS = 1;
     const STATUT_PAIEMENT = 2;
     const STATUT_AVORTE = 3;
@@ -101,7 +101,7 @@ class Commande
 
    /**
     * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet",mappedBy="commande", cascade={"persist"}, orphanRemoval=true)
-    *
+    * @Assert\Valid()
     */
       private $billets;
 

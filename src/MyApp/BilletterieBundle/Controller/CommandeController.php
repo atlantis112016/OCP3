@@ -37,7 +37,7 @@ class CommandeController extends Controller
                 //---------------------- Test Limite Billet - utilisation du service ------------------//
                 $isLimiteBillet =  $this->container->get('my_app_billetterie.limitebillet');
 
-                 if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), $cde->getNbBillet(), 1) === true)) {
+                 if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), $cde->getNbBillet(), 0) === true)) {
 
                 $this->addFlash('danger',
                     'La limite de vente de billet pour le ' . $cde->getDateVisite()->format('d/m/Y') . ' est dépassée. Merci de choisir une autre date '
@@ -68,7 +68,7 @@ class CommandeController extends Controller
             return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $cde->getId(),));
             }
 
-        return $this->render('MyAppBilletterieBundle:billetterie:etape1.html.twig', array(
+        return $this->render('MyAppBilletterieBundle:CommandeController:etape1.html.twig', array(
             'form' => $form->createView(),
             ));
     }
@@ -97,7 +97,7 @@ class CommandeController extends Controller
 
             //---------------------- Test Limite Billet - utilisation du service ------------------//
             $isLimiteBillet =  $this->container->get('my_app_billetterie.limitebillet');
-            if (($isLimiteBillet->isLimiteBillet($actuCommande->getDateVisite(), $actuCommande->getNbBillet(), 0) === true)) {
+            if (($isLimiteBillet->isLimiteBillet($actuCommande->getDateVisite(), 0, 0) === true)) {
                 $this->addFlash('danger',
                     'La limite de vente de billet pour le ' . $actuCommande->getDateVisite()->format('d/m/Y') . ' est dépassée. Merci de choisir une autre date '
                 );
@@ -121,7 +121,7 @@ class CommandeController extends Controller
             return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $actuCommande->getId(),));
 
         }
-        return $this->render('MyAppBilletterieBundle:billetterie:etape1.html.twig', array(
+        return $this->render('MyAppBilletterieBundle:CommandeController:etape1.html.twig', array(
             'form' => $form->createView(),));
     }
 
@@ -150,7 +150,7 @@ class CommandeController extends Controller
             return $this->redirectToRoute('my_app_billetterie_recap', array('id' => $actuCommande->getId()));
             }
         }
-        return $this->render('MyAppBilletterieBundle:billetterie:etape2.html.twig', array(
+        return $this->render('MyAppBilletterieBundle:CommandeController:etape2.html.twig', array(
             'id' => $actuCommande->getId(),
             'dateVisite' => $actuCommande->getDateVisite(),
             'form' => $form->createView(),
@@ -163,16 +163,14 @@ class CommandeController extends Controller
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * @Route("/cde/etape2/addBillet/{id}", name="my_app_billetterie_addbillet", requirements={"id" = "\d+"})
-     * Bouton ajouter un billet dans twig etape2
-     */
+     **/
     public function addBillet(Request $request, Commande $cde)
     {
         $getNbBillet = $cde->getNbBillet();
-        $nbBillet = $getNbBillet + 1;
-
+       // dump($nbBillet);die();
         //---------------------- Test Limite Billet - utilisation du service ------------------//
         $isLimiteBillet =  $this->container->get('my_app_billetterie.limitebillet');
-        if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), $nbBillet, 1) === true)) {
+        if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), 1, 1) === true)) {
             $this->addFlash('danger',
                 'La limite de vente de billet pour le ' . $cde->getDateVisite()->format('d/m/Y') .
                 ' est dépassée. Vous ne pouvez plus ajouter de billet, merci de choisir une autre date.'
@@ -180,17 +178,15 @@ class CommandeController extends Controller
             return $this->redirectToRoute('my_app_billetterie_editcde', array('id' => $cde->getId(),));
         }
         // ---------- CREATION ET STOCKAGE DES BILLETS DANS L'ARRYCOLLECTION ----------
-        for ($i =  $getNbBillet; $i < $nbBillet; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $cde->addBillet(new Billet());
         }
-        $cde->setNbBillet($nbBillet);
+        $cde->setNbBillet($getNbBillet + 1);
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
         $this->addFlash('info', 'Nouveau Billet enregistré');
         return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $cde->getId(),));
-
-        //return new Response('Nouveau Billet : ' .$nbBillet);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -198,8 +194,7 @@ class CommandeController extends Controller
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * @Route("/cde/etape2/deleteBillet/{id}", name="my_app_billetterie_deletebillet", requirements={"id" = "\d+"})
-     * Suppression d'un billet dans twig étape2 à l'aide d'un tableau
-     */
+     **/
     public function deleteBillet(Request $request, Billet $billet)
     {
         $em = $this->getDoctrine()->getManager();
@@ -230,8 +225,7 @@ class CommandeController extends Controller
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * @Route("/cde/etape3/{id}", name="my_app_billetterie_recap", requirements={"id" = "\d+"})
-     * Récap de la commmande avant billet et mise à jour des tarifs par billet et calcul montant total
-     */
+     * */
     public function recapAction(Request $request, Commande $actuCde )
     {
 
@@ -242,7 +236,7 @@ class CommandeController extends Controller
         $calculTarif = $this->container->get('my_app_billetterie.tarifs');
         $calculTarif->calculTarifs($actuCde);
 
-           return $this->render('MyAppBilletterieBundle:billetterie:etape3.html.twig', array(
+           return $this->render('MyAppBilletterieBundle:CommandeController:etape3.html.twig', array(
             'id' => $actuCde->getId(),
             'recapCde' => $actuCde,
             'stripe_public_key' => $this->getParameter("stripe_public_key"),
@@ -290,7 +284,7 @@ class CommandeController extends Controller
                 return $this->redirectToRoute('my_app_billetterie_home');
             }
         }
-       return $this->render('MyAppBilletterieBundle:billetterie:etape3.html.twig', array(
+       return $this->render('MyAppBilletterieBundle:CommandeController:etape3.html.twig', array(
        '$id' => $recapCde->getId(),));
     }
 }

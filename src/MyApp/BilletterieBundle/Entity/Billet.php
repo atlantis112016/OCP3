@@ -25,7 +25,7 @@ class Billet
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
+     *
      *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
@@ -33,7 +33,7 @@ class Billet
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
+     *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $prenom;
