@@ -1,9 +1,14 @@
 <?php
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/debug
 namespace MyApp\BilletterieBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+<<<<<<< HEAD
 use MyApp\BilletterieBundle\Entity\Commande;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -11,6 +16,17 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+=======
+use MyApp\BilletterieBundle\Entity\Billet;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
+>>>>>>> refs/remotes/origin/debug
 
 class CommandeType extends AbstractType
 {
@@ -20,6 +36,7 @@ class CommandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+<<<<<<< HEAD
             ->add('datereserv', DateType::class, array ('widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'label' => false,
@@ -53,6 +70,34 @@ class CommandeType extends AbstractType
                 array( 'required' => true,
                     'label'  => 'Code Stripe'))
 */
+=======
+
+            ->add('email',EmailType::class,
+                array( 'required' => true ))
+            ->add('dateVisite', DateTimeType::class, array('widget'=> 'single_text'))
+            ->add('typeJournee',ChoiceType::class, array('choices'  => array(
+        'Journée' => 'Journee',
+        'Demi-journée' => 'Demi-journee'),
+        'choices_as_values' => true))
+             ->add('nbBillet', ChoiceType::class,
+                array( 'required' => true,
+                    'label'  => 'Choisir le nombre de billet',
+                    'choices' => array(
+                        '1' => 1,
+                        '2' => 2,
+                        '3' => 3,
+                        '4' => 4,
+                        '5' => 5,
+                        '6' => 6,
+                        '7' => 7,
+                        '8' => 8,
+                        '9' => 9,
+                        '10' => 10,
+                    )))
+                    ;
+    }
+
+>>>>>>> refs/remotes/origin/debug
     /**
      * {@inheritdoc}
      */

@@ -850,7 +850,11 @@ th {
 	font-weight: 800;
 	letter-spacing: -0.6px;
 	vertical-align:middle;
+<<<<<<< HEAD
 	text-align: center;
+=======
+	text-align: center
+>>>>>>> refs/remotes/origin/debug
 }
 
 td {
@@ -858,6 +862,36 @@ td {
 	vertical-align:middle; 
 	text-align: center;
 	font-weight: 300;
+<<<<<<< HEAD
 	letter-spacing: -0.6px;
 }
 
+=======
+	letter-spacing: -0.6px
+}
+
+/***************
+	Form
+ */
+label {
+	font-size: 20px;
+	text-align: left;
+	font-weight: bold;
+	letter-spacing: -0.6px;
+	color:#2196F3
+}
+input {
+	font-size: 18px;
+	text-align: left;
+	font-weight: bold
+}
+.form-group {
+	text-align: left
+}
+.separation {
+	border-bottom:2px dashed #75757F
+}
+select {
+	width:50px;
+}
+>>>>>>> refs/remotes/origin/debug

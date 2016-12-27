@@ -2,22 +2,35 @@
 
 namespace MyApp\BilletterieBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+<<<<<<< HEAD
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+=======
+use MyApp\BilletterieBundle\Validator\JoursInterdit;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use MyApp\BilletterieBundle\Validator\DateVisite;
+>>>>>>> refs/remotes/origin/debug
 
 /**
  * commande
  *
- * @ORM\Table(name="commande")
- * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\commandeRepository")
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\CommandeRepository")
  */
 class Commande
 {
+    const MAX_BILLETS = 3;
+    const STATUT_ENCOURS = 1;
+    const STATUT_PAIEMENT = 2;
+    const STATUT_AVORTE = 3;
+    const STATUT_TERMINE = 4;
     /**
      * @var int
      *
-     * @ORM\Column(name="idCde", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -25,46 +38,83 @@ class Commande
 
     /**
      * @var \DateTime
+<<<<<<< HEAD
      * @Assert\NotBlank()
      * @Assert\Type("\DateTime")
      * @ORM\Column(name="datereserv", type="datetime")
+=======
+     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
+     * @Assert\DateTime(message="Ce champ doit être une date au format :dd-mm-yyyy")
+     * @ORM\Column(type="datetime")
+>>>>>>> refs/remotes/origin/debug
      */
-    private $datereserv;
+    private $dateReserv;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=50)
+     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
+     * @Assert\Email(message="Merci de taper un mail valide")
+     * @ORM\Column(type="string", length=50)
      */
     private $email;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="montantTotal", type="decimal", scale=2)
+     * @var \DateTime
+     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
+     * @Assert\DateTime(message="Ce champ doit être une date au format :d-m-Y")
+     * @DateVisite()
+     * @JoursInterdit()
+     * @ORM\Column(type="datetime")
      */
-    private $montantTotal;
+    private $dateVisite;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="decimal", scale=2)
+     */
+    private $montantTotal = 0.00;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="codeReserv", type="string", length=255)
+     * @ORM\Column(type="string", length=30)
+     */
+    private $typeJournee;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
      */
     private $codeReserv;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="statut", type="string", length=255)
+     * @ORM\Column(type="integer", length=255)
      */
     private $statut;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tokenStripe", type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $tokenStripe;
+    private $tokenStripe = '00000000000000';
+
+     /**
+     * @var integer
+     * @Assert\Range(min=1, max=10)
+     * @ORM\Column(type="integer")
+     */
+    private $nbBillet;
+
+   /**
+    * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet",mappedBy="commande", cascade={"persist"}, orphanRemoval=true)
+    *
+    */
+      private $billets;
 
      /**
      * @var integer
@@ -91,27 +141,27 @@ class Commande
     }
 
     /**
-     * Set datereserv
+     * Set dateReserv
      *
-     * @param \DateTime $datereserv
+     * @param \DateTime $dateReserv
      *
      * @return commandes
      */
-    public function setDatereserv($datereserv)
+    public function setDatereserv($dateReserv)
     {
-        $this->datereserv = $datereserv;
+        $this->dateReserv = $dateReserv;
 
         return $this;
     }
 
     /**
-     * Get datereserv
+     * Get dateReserv
      *
      * @return \DateTime
      */
     public function getDatereserv()
     {
-        return $this->datereserv;
+        return $this->dateReserv;
     }
 
     /**
@@ -239,6 +289,11 @@ class Commande
     public function __construct()
     {
         $this->billets = new ArrayCollection();
+<<<<<<< HEAD
+=======
+        $this->dateReserv = new \DateTime();
+        $this->codeReserv = $this->genCodeResa();
+>>>>>>> refs/remotes/origin/debug
     }
 
     /**
@@ -251,7 +306,11 @@ class Commande
     public function addBillet(\MyApp\BilletterieBundle\Entity\Billet $billet)
     {
         $this->billets[] = $billet;
+<<<<<<< HEAD
 
+=======
+        $billet->setCommande($this);
+>>>>>>> refs/remotes/origin/debug
         return $this;
     }
 
@@ -263,17 +322,26 @@ class Commande
     public function removeBillet(\MyApp\BilletterieBundle\Entity\Billet $billet)
     {
         $this->billets->removeElement($billet);
+<<<<<<< HEAD
+=======
+        $billet->setParent(null);
+>>>>>>> refs/remotes/origin/debug
     }
 
     /**
      * Get billets
      *
+<<<<<<< HEAD
      * @return \Doctrine\Common\Collections\Collection
+=======
+     * @return Collection|Billet[]
+>>>>>>> refs/remotes/origin/debug
      */
     public function getBillets()
     {
         return $this->billets;
     }
+<<<<<<< HEAD
 
     /**
      * Set nbBillet
@@ -297,5 +365,92 @@ class Commande
     public function getNbBillet()
     {
         return $this->nbBillet;
+=======
+
+    /**
+     * Set nbBillet
+     *
+     * @param integer $nbBillet
+     *
+     * @return Commande
+     */
+    public function setNbBillet($nbBillet)
+    {
+        $this->nbBillet = $nbBillet;
+
+        return $this;
+    }
+
+    /**
+     * Get nbBillet
+     *
+     * @return integer
+     */
+    public function getNbBillet()
+    {
+        return $this->nbBillet;
+    }
+
+    /**
+     * Set dateVisite
+     *
+     * @param \DateTime $dateVisite
+     *
+     * @return Commande
+     */
+    public function setDateVisite($dateVisite)
+    {
+        $this->dateVisite = $dateVisite;
+
+        return $this;
+    }
+
+    /**
+     * Get dateVisite
+     *
+     * @return \DateTime
+     */
+    public function getDateVisite()
+    {
+        return $this->dateVisite;
+    }
+
+    /**
+     * Set typeJournee
+     *
+     * @param string $typeJournee
+     *
+     * @return Commande
+     */
+    public function setTypeJournee($typeJournee)
+    {
+        $this->typeJournee = $typeJournee;
+
+        return $this;
+    }
+
+    /**
+     * Get typeJournee
+     *
+     * @return string
+     */
+    public function getTypeJournee()
+    {
+        return $this->typeJournee;
+    }
+
+    public function genCodeResa()
+    {
+        $randomNumber = rand(1000, 5000);
+
+        $letters = [ 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        $i = rand(0, 25);
+        $letter = $letters[$i];
+
+        $time = time();
+        $codeReserv = 'LOUVRE' .  $randomNumber  . $letter . $time;
+
+        return $codeReserv;
+>>>>>>> refs/remotes/origin/debug
     }
 }

@@ -9,7 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+<<<<<<< HEAD
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+=======
+>>>>>>> refs/remotes/origin/debug
 
 class BilletType extends AbstractType
 {
@@ -19,6 +22,7 @@ class BilletType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+<<<<<<< HEAD
             ->add('nom', TextType::class, array(
             'attr' => array(
                 'class' => 'nom',
@@ -64,6 +68,21 @@ class BilletType extends AbstractType
 
          /*   ->add('commande')
             ->add('typeTarif')*/
+=======
+            ->add('nom', TextType::class)
+            ->add('prenom', TextType::class)
+            ->add('dateNaissance',BirthdayType::class, array(
+                'days' => range(1,31),
+                'months' => range(1, 12),
+                'years' => range(1902, date('Y')),
+                'format' => 'dd-MM-yyyy'))
+            ->add('isTarifReduit', CheckboxType::class, array(
+                'label' => 'Tarif réduit ',
+                'required'  =>  false))
+            ->add('pays', CountryType::class, array(
+                'preferred_choices' => array('FR')
+            ))
+>>>>>>> refs/remotes/origin/debug
         ;
     }
     

@@ -2,3 +2,35 @@ services:
 #    my_app_billetterie.example:
 #        class: MyApp\BilletterieBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+     my_app_billetterie.heure:
+        class: MyApp\BilletterieBundle\Services\LimiteHeureBillet
+
+     my_app_billetterie.limitebillet:
+        class: MyApp\BilletterieBundle\Services\LimiteBillet
+        arguments:
+          - "@doctrine.orm.entity_manager"
+     #   tags:
+     #       - { name: validator.constraint_validator, alias: my_app_billetterie.limitebillet }
+
+     my_app_billetterie.tarifs:
+        class: MyApp\BilletterieBundle\Services\Tarifs
+        arguments:
+          - "@doctrine.orm.entity_manager"
+
+     my_app_billetterie.totalcde:
+        class: MyApp\BilletterieBundle\Services\TotalCde
+        arguments:
+          - "@doctrine.orm.entity_manager"
+
+     my_app_billetterie.sendmail:
+        class: MyApp\BilletterieBundle\Services\MailConfirmation
+        arguments:
+            - "@mailer"
+            - "@twig"
+            - "@service_container"
+            - "@doctrine.orm.entity_manager"
+
+     my_app_billetterie.stripe:
+        class: MyApp\BilletterieBundle\Services\Stripe
+        arguments:
+          - "@doctrine.orm.entity_manager"

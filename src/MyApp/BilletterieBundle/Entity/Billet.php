@@ -4,11 +4,15 @@ namespace MyApp\BilletterieBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+<<<<<<< HEAD
+=======
+use MyApp\BilletterieBundle\Validator\DateAnniv;
+>>>>>>> refs/remotes/origin/debug
 
 /**
  * Billet
  *
- * @ORM\Table(name="billet")
+ * @ORM\Table()
  * @ORM\Entity(repositoryClass="MyApp\BilletterieBundle\Repository\BilletRepository")
  */
 class Billet
@@ -16,49 +20,56 @@ class Billet
     /**
      * @var int
      *
-     * @ORM\Column(name="idBillet", type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateVisite", type="datetime")
-     */
-    private $dateVisite;
-
-    /**
      * @var string
+<<<<<<< HEAD
      * @Assert\NotBlank()
      * @Assert\Type("\DateTime")
      * @ORM\Column(name="nom", type="string", length=30)
+=======
+     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
+     *
+     * @ORM\Column(type="string", length=30, nullable=true)
+>>>>>>> refs/remotes/origin/debug
      */
     private $nom;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="prenom", type="string", length=30)
+     * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $prenom;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="dateNaissance", type="datetime")
+     * @Assert\DateTime(message="Ce champ doit être une date au format :d-m-Y")
+     * @DateAnniv()
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateNaissance;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="typeJournee", type="string", length=30)
+     /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $typeJournee;
+    private $isTarifReduit;
 
     /**
+     * @var string
+     * @Assert\Country(message="Ce champ doit être de Type (ex: France = FR)")
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private $pays;
+
+    /**
+<<<<<<< HEAD
      * @var bool
      * @ORM\Column(name="reduit", type="boolean")
      */
@@ -66,10 +77,13 @@ class Billet
 
     /**
      * @var string
+=======
+     * @var integer
+>>>>>>> refs/remotes/origin/debug
      *
-     * @ORM\Column(name="pays", type="string", length=30)
+     * @ORM\Column(type="decimal", scale=2, nullable=true)
      */
-    private $pays;
+    private $montant;
 
     /**
      * @var string
@@ -79,14 +93,24 @@ class Billet
     private $montantBillet;
 
       /**
+<<<<<<< HEAD
        * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\commande", cascade={"persist"})
        * @ORM\JoinColumn(name="idCde", referencedColumnName="idCde")
+=======
+       * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\Commande", inversedBy="billets", cascade={"persist"})
+       *
+>>>>>>> refs/remotes/origin/debug
        */
       private $commande;
 
       /**
+<<<<<<< HEAD
        * @ORM\ManyToOne(targetEntity="MyApp\BilletterieBundle\Entity\typeTarif", cascade={"persist"})
        * @ORM\JoinColumn(name="typeTarif_id", referencedColumnName="idTarif")
+=======
+       * @var string
+       * @ORM\Column(type="string", length=15, nullable=true)
+>>>>>>> refs/remotes/origin/debug
        */
       private $typeTarif;
 
@@ -101,31 +125,7 @@ class Billet
         return $this->id;
     }
 
-    /**
-     * Set dateVisite
-     *
-     * @param \DateTime $dateVisite
-     *
-     * @return Billet
-     */
-    public function setDateVisite($dateVisite)
-    {
-        $this->dateVisite = $dateVisite;
-
-        return $this;
-    }
-
-    /**
-     * Get dateVisite
-     *
-     * @return \DateTime
-     */
-    public function getDateVisite()
-    {
-        return $this->dateVisite;
-    }
-
-    /**
+     /**
      * Set nom
      *
      * @param string $nom
@@ -197,31 +197,7 @@ class Billet
         return $this->dateNaissance;
     }
 
-    /**
-     * Set typeJournee
-     *
-     * @param string $typeJournee
-     *
-     * @return Billet
-     */
-    public function setTypeJournee($typeJournee)
-    {
-        $this->typeJournee = $typeJournee;
-
-        return $this;
-    }
-
-    /**
-     * Get typeJournee
-     *
-     * @return string
-     */
-    public function getTypeJournee()
-    {
-        return $this->typeJournee;
-    }
-
-    /**
+     /**
      * Set pays
      *
      * @param string $pays
@@ -244,7 +220,6 @@ class Billet
     {
         return $this->pays;
     }
-
 
     /**
      * Set commande
@@ -273,11 +248,11 @@ class Billet
     /**
      * Set typeTarif
      *
-     * @param \MyApp\BilletterieBundle\Entity\typeTarif $typeTarif
+     * @param string $typeTarif
      *
      * @return Billet
      */
-    public function setTypeTarif(\MyApp\BilletterieBundle\Entity\typeTarif $typeTarif = null)
+    public function setTypeTarif($typeTarif)
     {
         $this->typeTarif = $typeTarif;
 
@@ -285,6 +260,92 @@ class Billet
     }
 
     /**
+     * Get typeTarif
+     *
+     * @return string
+     */
+    public function getTypeTarif()
+    {
+        return $this->typeTarif;
+    }
+
+
+    /**
+     * Set commande
+     *
+     * @param \MyApp\BilletterieBundle\Entity\commande $commande
+     *
+     * @return Billet
+     */
+    public function setCommande(\MyApp\BilletterieBundle\Entity\commande $commande = null)
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
+    /**
+<<<<<<< HEAD
+     * Get commande
+     *
+     * @return \MyApp\BilletterieBundle\Entity\commande
+     */
+    public function getCommande()
+    {
+        return $this->commande;
+    }
+
+    /**
+     * Set typeTarif
+     *
+     * @param \MyApp\BilletterieBundle\Entity\typeTarif $typeTarif
+     *
+     * @return Billet
+     */
+    public function setTypeTarif(\MyApp\BilletterieBundle\Entity\typeTarif $typeTarif = null)
+    {
+        $this->typeTarif = $typeTarif;
+=======
+     * Set isTarifReduit
+     *
+     * @param boolean $isTarifReduit
+     *
+     * @return Billet
+     */
+    public function setTarifReduit($isTarifReduit)
+    {
+        $this->isTarifReduit = $isTarifReduit;
+
+        return $this;
+    }
+
+    /**
+     * Get isTarifReduit
+     *
+     * @return boolean
+     */
+    public function getTarifReduit()
+    {
+        return $this->isTarifReduit;
+    }
+
+     /**
+     * Set isTarifReduit
+     *
+     * @param boolean $isTarifReduit
+     *
+     * @return Billet
+     */
+    public function setIsTarifReduit($isTarifReduit)
+    {
+        $this->isTarifReduit = $isTarifReduit;
+>>>>>>> refs/remotes/origin/debug
+
+        return $this;
+    }
+
+    /**
+<<<<<<< HEAD
      * Get typeTarif
      *
      * @return \MyApp\BilletterieBundle\Entity\typeTarif
@@ -344,5 +405,38 @@ class Billet
     public function getMontantBillet()
     {
         return $this->montantBillet;
+=======
+     * Get isTarifReduit
+     *
+     * @return boolean
+     */
+    public function getIsTarifReduit()
+    {
+        return $this->isTarifReduit;
+    }
+
+    /**
+     * Set montant
+     *
+     * @param integer $montant
+     *
+     * @return Billet
+     */
+    public function setMontant($montant)
+    {
+        $this->montant = $montant;
+
+        return $this;
+    }
+
+    /**
+     * Get montant
+     *
+     * @return integer
+     */
+    public function getMontant()
+    {
+        return $this->montant;
+>>>>>>> refs/remotes/origin/debug
     }
 }

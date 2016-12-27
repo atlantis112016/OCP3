@@ -1,6 +1,10 @@
 {% extends "MyAppBilletterieBundle::layout.html.twig" %}
+<<<<<<< HEAD
 <?php $_SESSION['id'] = $_GET['id'];
 $etape = $_GET['Etape']; ?>
+=======
+
+>>>>>>> refs/remotes/origin/debug
    {% block title %}{{ parent() }} - Commande {% endblock %}
 
 {% block header %}
@@ -8,6 +12,7 @@ $etape = $_GET['Etape']; ?>
 <div class="container">
     <div class="slider-container">
         <div class="intro-text">
+<<<<<<< HEAD
             <div class="intro-heading"> Commande </div>
             <div class="intro-lead-in">
 
@@ -36,10 +41,140 @@ $etape = $_GET['Etape']; ?>
 
                 {{ form_widget ( form ) }}
     {{ form_end ( form ) }}
+=======
+            <div class="intro-heading"> Commande de Billets </div>
+            <div class="intro-lead-in">
+                <ul class="nav nav-tabs" id="tab">
+                    <li class="nav col-md-3 active" id="Cde"><a href="{{ path('my_app_billetterie_cde',{'id': id}) }}" id="ongletJour" data-toggle="tab">ETAPE 1</a></li>
+                    <li class="nav col-md-3 active" id="liBillet"><a href="#" id="ongletBillet" data-toggle="tab">ETAPE 2</a></li>
+                    <li class="nav col-md-3 disabled" id="liPaiement"><a href="#" id="ongletPaiement" data-toggle="tab">ETAPE 3</a></li>
+                    <li class="nav col-md-3 disabled" id="liConfirmation"><a href="#" id="ongletConfirmation" data-toggle="tab">RECAPITULATIF</a></li>
+                </ul>
+                {% include'MyAppBilletterieBundle:billetterie:flashmessage.html.twig' %}
+                <div><h4>Date de votre visite : {{ dateVisite|localizeddate('full', 'none') }} </h4>
+                        <p><h4><a href={{ path('my_app_billetterie_addbillet',{'id': id}) }}>
+                                <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Ajouter un billet</a></h4></p>
+                </div>
+                <div class="separation"></div>
+                <div class="row">
+                    <table class="table table-striped table-hover ">
+                        <thead>
+                        <tr>
+                            <th colspan="3"> Supprimer un billet :</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for list in listeBillets %}
+                            <tr>
+                                <td class="text-left">{{ list.nom }} {{ list.prenom }}</td>
+                                <td class="text-left">{{ list.dateNaissance|date('d/m/Y') }}</td>
+                                <td class="text-center>"><a href={{ path('my_app_billetterie_deletebillet',{'id': list.id}) }}>
+                                        <i class="fa fa-times-circle fa-lg" aria-hidden="true" style="color: #b92c28"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="separation"></div>
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+                {% for message in app.session.flashbag.get('info') %}
+                    <div class="alert alert-danger text-center">{{ message }}</div>
+                {% endfor %}
+                    {% for billet in form.billets %}
+                        <div class="form-group">
+                                {{ form_label(billet.nom, "Nom :", {'label_attr': {'class':'cols-sm-2 control-label'}}) }}
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                        {{ form_widget(billet.nom, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(billet.nom) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(billet.prenom, "Prénom :", {'label_attr': {'class':'cols-sm-2 control-label'}}) }}
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                    {{ form_widget(billet.prenom, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(billet.prenom) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(billet.dateNaissance, "Date de naissance :", {'label_attr': {'class':'cols-sm-2 control-label'}}) }}
+                            <div class="cols-sm-10">
+                                <div id="date" class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-birthday-cake" aria-hidden="true"></i></span>
+                                    {{ form_widget(billet.dateNaissance, {'attr': {'class': 'form-control','placeholder':'Format dd-mm-yyyy'}}) }}
+                                    {{ form_errors(billet.dateNaissance) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(billet.pays, "Pays :", {'label_attr': {'class':'cols-sm-2 control-label'}}) }}
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-map-signs" aria-hidden="true"></i></span>
+                                    {{ form_widget(billet.pays, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(billet.pays) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="cols-sm-10">
+                                <div class="form-check">
+                                  <span class="form-check-label">
+                                      {{ form_label(billet.isTarifReduit, "Tarif réduit :", {'label_attr': {'class':'cols-sm-2 control-label'}}) }}
+                                      {{ form_widget(billet.isTarifReduit, {'attr': {'class':'form-check-input', 'aria-label':'Checkbox for following text input'}}) }}
+                                      {{ form_errors(billet.isTarifReduit) }}
+                                  </span>
+                                </div>
+                                <span class="input-group-addon">Présentation d'un justificatif obligatoire (carte d’étudiant, carte de militaire ou équivalent).</span>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="separation"></div>
+
+                    {% endfor %}
+                    <div class="row">
+                            <table class="table table-striped table-hover ">
+                                <thead>
+                                <tr>
+                                    <th colspan="3"> Supprimer un billet :</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for list in listeBillets %}
+                                <tr>
+                                    <td class="text-left">{{ list.nom }} {{ list.prenom }}</td>
+                                    <td class="text-left">{{ list.dateNaissance|date('d/m/Y') }}</td>
+                                    <td class="text-center>"><a href={{ path('my_app_billetterie_deletebillet',{'id': list.id}) }}>
+                                            <i class="fa fa-times-circle fa-lg" aria-hidden="true" style="color: #b92c28"></i></a></td>
+                                </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                    </div>
+
+                <div class="form-group">
+                    <div class="cols-sm-10">
+                        <a class="btn btn-success pull-left" href={{ path('my_app_billetterie_editcde',{'id': id}) }}>
+                            <i class="fa fa-arrow-circle-o-left fa-2x"></i></a>
+                        <input type= "submit" value="ETAPE SUIVANTE"  class= "btn btn-primary pull-right" />
+                    </div>
+                </div>
+
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+>>>>>>> refs/remotes/origin/debug
             </div>
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 {% endblock %}
 
 {% block javascripts %}
@@ -77,4 +212,12 @@ $etape = $_GET['Etape']; ?>
         });
     </script>
     {% endjavascripts %}
+=======
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+>>>>>>> refs/remotes/origin/debug
 {% endblock %}
