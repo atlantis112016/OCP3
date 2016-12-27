@@ -9,10 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-<<<<<<< HEAD
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-=======
->>>>>>> refs/remotes/origin/debug
 
 class BilletType extends AbstractType
 {
@@ -22,53 +18,6 @@ class BilletType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-<<<<<<< HEAD
-            ->add('nom', TextType::class, array(
-            'attr' => array(
-                'class' => 'nom',
-                'required',
-                'placeholder' => 'Entrez votre Nom'
-            )
-        ))
-            ->add('prenom', TextType::class, array(
-                'attr' => array(
-                    'class' => 'prenom',
-                    'required',
-                    'placeholder' => 'Entrez votre Prénom'
-                )
-            ))
-            ->add('pays', CountryType::class, array(
-                'data' => 'FR'
-            ))
-            ->add('dateNaissance', BirthdayType::class, array(
-                'widget' => 'single_text',
-                'attr' => array(
-                    'class' => 'naissance'
-                )
-            ))
-            ->add('typeJournee', ChoiceType::class, array(
-                'choices' => array(
-                    'Journée' => 'journee',
-                    'Demi-journée' => 'demiJournee'
-                ),
-                'attr' => array(
-                    'class' => 'choixType'
-                )
-            ))
-            ->add('tarifReduit', CheckboxType::class, array(
-                'label' => 'Tarif Réduit',
-                'label_attr' => array(
-                    'id' => 'labelReduit'
-                ),
-                'required' => false,
-                'attr' => array(
-                    'class' => 'choixReduit'
-                )
-            ))
-
-         /*   ->add('commande')
-            ->add('typeTarif')*/
-=======
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
             ->add('dateNaissance',BirthdayType::class, array(
@@ -82,7 +31,6 @@ class BilletType extends AbstractType
             ->add('pays', CountryType::class, array(
                 'preferred_choices' => array('FR')
             ))
->>>>>>> refs/remotes/origin/debug
         ;
     }
     

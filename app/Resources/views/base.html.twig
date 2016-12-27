@@ -1,9 +1,8 @@
-session_start();
 <!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
-        <title>{% block title %}{% endblock %} - Musée du Louvre</title>
+        <title>{% block title %}{% endblock %}- Musee du Louvre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -12,10 +11,11 @@ session_start();
       <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-      <!-- Optional theme -->   
+      <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-        <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-awusxf8AUojygHf2+joICySzB780jVvQaVCAt1clU3QsyAitLGul28Qxb2r1e5g+" crossorigin="anonymous">     
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.css" rel="stylesheet" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" integrity="sha384-awusxf8AUojygHf2+joICySzB780jVvQaVCAt1clU3QsyAitLGul28Qxb2r1e5g+" crossorigin="anonymous">
 
       <!-- Font-Awesome --> 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -24,6 +24,10 @@ session_start();
         {% stylesheets 'bundles/MyAppBilletterie/css/style.css' filter='cssrewrite' %}
          <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
+        {% stylesheets 'bundles/myappbilletterie/css/bootstrap-datepicker.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
     {% endblock %}
 
   </head>
@@ -70,7 +74,9 @@ session_start();
           </div>
       <!-- /.container-fluid -->
         </nav>
-        {% block body %}{% endblock %}
+        {% block body %}
+
+        {% endblock %}
         <!-- Header -->
         <header>
 
@@ -83,21 +89,25 @@ session_start();
       <footer>
         <div class="container text-center">
             <p>Designed by <a href="http://znackweb.com"><span>Znackweb</span>.com</a></p>
-            <p><a href="#" }}><span><i class="fa fa-gavel"></i> Mentions </span>Légales</a></p>
+            <p><a href={{ path('my_app_billetterie_mention') }}><span><i class="fa fa-gavel"></i> Mentions </span>Légales</a></p>
         </div>
       </footer>
-        {% block javascripts %}
-            {% javascripts %}
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-                <script src="https://maxcdn.bootstrapcdn.com/bootlint/0.14.2/bootlint.min.js" integrity="sha384-SLfe/wBrCVfyGjtLhfUmA5cYQLnNVTRmwMUJ11s7x5HxXCKom2oeEwX9bvY74CAs" crossorigin="anonymous"></script>
 
-                <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
-                crossorigin="anonymous"></script>
+    {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.0/moment.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.43/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.fr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js" integrity="sha256-IxYUmOOk74FUrcx5FEMOHVmTJDb7ZAwnC/ivo/OQGxg=" crossorigin="anonymous"></script>
 
-                <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
 
-            {% endjavascripts %}
-        {% endblock %}
-  </body>
+    {% endblock %}
+</body>
+
+
+
 </html>

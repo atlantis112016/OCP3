@@ -850,11 +850,7 @@ th {
 	font-weight: 800;
 	letter-spacing: -0.6px;
 	vertical-align:middle;
-<<<<<<< HEAD
-	text-align: center;
-=======
 	text-align: center
->>>>>>> refs/remotes/origin/debug
 }
 
 td {
@@ -862,11 +858,6 @@ td {
 	vertical-align:middle; 
 	text-align: center;
 	font-weight: 300;
-<<<<<<< HEAD
-	letter-spacing: -0.6px;
-}
-
-=======
 	letter-spacing: -0.6px
 }
 
@@ -894,4 +885,3 @@ input {
 select {
 	width:50px;
 }
->>>>>>> refs/remotes/origin/debug

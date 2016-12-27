@@ -1,52 +1,14 @@
 {% extends "MyAppBilletterieBundle::layout.html.twig" %}
-<<<<<<< HEAD
-<?php $_SESSION['id'] = $_GET['id'];
-$etape = $_GET['Etape']; ?>
-   {% block title %}{{ parent() }} - Commande {% endblock %}
 
-{% block header %}
-=======
-
-   {% block title %}{{ parent() }} - Commande {% endblock %}
+   {% block title %}{{ parent() }}Commande {% endblock %}
 
 {% block header %}
     {#{{ dump() }}#}
     {{ form_start(form) }}
->>>>>>> refs/remotes/origin/debug
 
 <div class="container">
     <div class="slider-container">
         <div class="intro-text">
-<<<<<<< HEAD
-            <div class="intro-heading"> Commande </div>
-            <div class="intro-lead-in">
-
-                <ul class="nav nav-tabs" id="tab">
-                    <li class="nav col-md-3 active" id="liJour"><a href="#jour" id="ongletJour" data-toggle="tab">ETAPE 1</a></li>
-                    <li class="nav col-md-3 disabled" id="liBillet"><a href="#billet" id="ongletBillet" data-toggle="tab">ETAPE 2</a></li>
-                    <li class="nav col-md-3 disabled" id="liPaiement"><a href="#paiement" id="ongletPaiement" data-toggle="tab">ETAPE 3</a></li>
-                    <li class="nav col-md-3 disabled" id="liConfirmation"><a href="#confirmation" id="ongletConfirmation" data-toggle="tab">RECAPITULATIF</a></li>
-                </ul>
-    {{ form_start ( form ) }}
-                {{ form_label (form.email) }}
-                {# Ajouter +sieurs champs identiques
-                {{ form_label ( form.emails ) }}
-                {{ form_errors ( form.emails ) }}
-                <ul id= "email-fields-list"
-                    data-prototype= " {{ form_widget ( form.emails.vars.prototype )| e }} " >
-                    {% for emailField in form.emails %}
-                        <li>
-                            {{ form_errors ( emailField ) }}
-                            {{ form_widget ( emailField ) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <a href= "#" id= "add-another-email" > Ajouter Billet </a> voir javascript ci dessous#}
-
-                {{ form_widget ( form ) }}
-    {{ form_end ( form ) }}
-=======
             <div class="intro-heading"> {{ 'COMMANDE' |trans }} </div>
             <div class="intro-lead-in">
 
@@ -60,7 +22,7 @@ $etape = $_GET['Etape']; ?>
                 {{ form_start(form) }}
                 {{ form_errors(form) }}
 
-                    {% include'MyAppBilletterieBundle:billetterie:flashmessage.html.twig' %}
+                    {% include'MyAppBilletterieBundle:CommandeController:flashmessage.html.twig' %}
                      <div class="form-group">
                         {{ form_label(form.dateVisite,'Date de visite : ',{'label_attr':{'class':'cols-sm-2 control-label'}}) }}
                         <div class="cols-sm-10">
@@ -111,50 +73,10 @@ $etape = $_GET['Etape']; ?>
 		{{ form_rest(form)}}
 		{{ form_end(form)}}
 
->>>>>>> refs/remotes/origin/debug
             </div>
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-{% endblock %}
-
-{% block javascripts %}
-    {% javascripts %}
-{#<script  type= "text/javascript" >
-    // keep track of how many email fields have been rendered
-    var emailCount = ' {{ form.emails | length }} ' ;
-
-    jQuery ( document ). ready ( function () {
-        jQuery ( '#add-another-email' ). click ( function ( e ) {
-            e . preventDefault ();
-
-            var emailList = jQuery ( '#email-fields-list' );
-
-            // grab the prototype template
-            var newWidget = emailList . attr ( 'data-prototype' );
-            // replace the "__name__" used in the id and name of the prototype
-            // with a number that's unique to your emails
-            // end name attribute looks like name="contact[emails][2]"
-            newWidget = newWidget . replace ( /__name__/g , emailCount );
-            emailCount ++ ;
-
-            // create a new list element and add it to the list
-            var newLi = jQuery ( '<li></li>' ). html ( newWidget );
-            newLi . appendTo ( emailList );
-        });
-    })
-</script>#}
-
-    <script>
-        $ ( document ). ready ( function () {
-            $ ( '.js-datepicker' ). datepicker ({
-                format : 'dd-mm-yyyy'
-            });
-        });
-    </script>
-    {% endjavascripts %}
-=======
 
 {% endblock %}
 
@@ -177,5 +99,4 @@ $etape = $_GET['Etape']; ?>
 
     });
     </script>#}
->>>>>>> refs/remotes/origin/debug
 {% endblock %}

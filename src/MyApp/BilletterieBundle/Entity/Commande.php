@@ -4,15 +4,10 @@ namespace MyApp\BilletterieBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-<<<<<<< HEAD
-use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
-=======
 use MyApp\BilletterieBundle\Validator\JoursInterdit;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use MyApp\BilletterieBundle\Validator\DateVisite;
->>>>>>> refs/remotes/origin/debug
 
 /**
  * commande
@@ -22,7 +17,7 @@ use MyApp\BilletterieBundle\Validator\DateVisite;
  */
 class Commande
 {
-    const MAX_BILLETS = 3;
+    const MAX_BILLETS = 1000;
     const STATUT_ENCOURS = 1;
     const STATUT_PAIEMENT = 2;
     const STATUT_AVORTE = 3;
@@ -38,15 +33,9 @@ class Commande
 
     /**
      * @var \DateTime
-<<<<<<< HEAD
-     * @Assert\NotBlank()
-     * @Assert\Type("\DateTime")
-     * @ORM\Column(name="datereserv", type="datetime")
-=======
      * @Assert\NotBlank(message="Ce champ ne peut pas être vide")
      * @Assert\DateTime(message="Ce champ doit être une date au format :dd-mm-yyyy")
      * @ORM\Column(type="datetime")
->>>>>>> refs/remotes/origin/debug
      */
     private $dateReserv;
 
@@ -112,20 +101,7 @@ class Commande
 
    /**
     * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet",mappedBy="commande", cascade={"persist"}, orphanRemoval=true)
-    *
-    */
-      private $billets;
-
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nbBillet", type="integer")
-     */
-    private $nbBillet;
-
-   /**
-    * @ORM\OneToMany(targetEntity="MyApp\BilletterieBundle\Entity\Billet", mappedBy="commande", cascade={"persist"})
-    * 
+    * @Assert\Valid()
     */
       private $billets;
 
@@ -289,11 +265,8 @@ class Commande
     public function __construct()
     {
         $this->billets = new ArrayCollection();
-<<<<<<< HEAD
-=======
         $this->dateReserv = new \DateTime();
         $this->codeReserv = $this->genCodeResa();
->>>>>>> refs/remotes/origin/debug
     }
 
     /**
@@ -306,11 +279,7 @@ class Commande
     public function addBillet(\MyApp\BilletterieBundle\Entity\Billet $billet)
     {
         $this->billets[] = $billet;
-<<<<<<< HEAD
-
-=======
         $billet->setCommande($this);
->>>>>>> refs/remotes/origin/debug
         return $this;
     }
 
@@ -322,50 +291,18 @@ class Commande
     public function removeBillet(\MyApp\BilletterieBundle\Entity\Billet $billet)
     {
         $this->billets->removeElement($billet);
-<<<<<<< HEAD
-=======
         $billet->setParent(null);
->>>>>>> refs/remotes/origin/debug
     }
 
     /**
      * Get billets
      *
-<<<<<<< HEAD
-     * @return \Doctrine\Common\Collections\Collection
-=======
      * @return Collection|Billet[]
->>>>>>> refs/remotes/origin/debug
      */
     public function getBillets()
     {
         return $this->billets;
     }
-<<<<<<< HEAD
-
-    /**
-     * Set nbBillet
-     *
-     * @param integer $nbBillet
-     *
-     * @return Commande
-     */
-    public function setNbBillet($nbBillet)
-    {
-        $this->nbBillet = $nbBillet;
-
-        return $this;
-    }
-
-    /**
-     * Get nbBillet
-     *
-     * @return integer
-     */
-    public function getNbBillet()
-    {
-        return $this->nbBillet;
-=======
 
     /**
      * Set nbBillet
@@ -451,6 +388,5 @@ class Commande
         $codeReserv = 'LOUVRE' .  $randomNumber  . $letter . $time;
 
         return $codeReserv;
->>>>>>> refs/remotes/origin/debug
     }
 }

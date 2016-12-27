@@ -16,7 +16,7 @@ class MainController extends Controller
     */
     public function indexAction()
     {
-        return $this->render('MyAppBilletterieBundle:billetterie:index.html.twig');
+        return $this->render('MyAppBilletterieBundle:mainController:index.html.twig');
     }
 
 
@@ -25,14 +25,14 @@ class MainController extends Controller
 */
         public function tarifAction()
     {
-        return $this->render('MyAppBilletterieBundle:billetterie:tarif.html.twig');
+        return $this->render('MyAppBilletterieBundle:mainController:tarif.html.twig');
     }
 /**      
 * @Route("/mention", name="my_app_billetterie_mention")      
 */
         public function mentionAction()
     {
-        return $this->render('MyAppBilletterieBundle:billetterie:mention.html.twig');
+        return $this->render('MyAppBilletterieBundle:mainController:mention.html.twig');
     }
 
 }

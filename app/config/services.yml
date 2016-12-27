@@ -7,3 +7,10 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    stripe.service:
+        class: AppBundle\Services\StripeService
+        arguments: ["%stripe_secret_key%"]
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
