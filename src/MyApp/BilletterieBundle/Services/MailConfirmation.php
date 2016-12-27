@@ -23,6 +23,7 @@ class MailConfirmation
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
+
     }
 
     public function confirmMail(Commande $recapCde)
@@ -34,7 +35,7 @@ class MailConfirmation
             ->setTo($recapCde->getEmail())
             ->setCharset('utf-8')
             ->setContentType('text/html')
-            ->setBody($this->twig->render('@MyAppBilletterie/CommandeController/email.html.twig',
+            ->setBody($this->twig->render('@MyAppBilletterie/billetterie/email.html.twig',
                 array('recapCde' => $recapCde, 'url'=>$imgUrl),'text/html'));
 
         //envoi du message

@@ -15,9 +15,9 @@ class DateAnnivValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        $date1 = $this->context->getRoot()->getData()->getDateVisite();
-//dump($date1,$value);
-        if ($value >= $date1) {
+        $date1 = new \DateTime('now');
+
+        if ($value->format('d-m-Y') >= $date1->format('d-m-Y')) {
            $this->context->addViolation($constraint->message);
          }
     }

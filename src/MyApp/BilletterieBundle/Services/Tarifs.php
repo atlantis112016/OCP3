@@ -36,7 +36,7 @@ class Tarifs
            //-------------Conversion date de naissance en âge---------//
            $dateNo = $billet->getDateNaissance();
            $age = $dateNo->diff($dateNow)->format('%y');
-
+            //dump($age);
            //----------------Condition pour trouver le bon montant et le bon type de tarif--------------//
            if ($billet->getTarifReduit() && $age > 11) {
                $billet->setTypeTarif('reduit');
@@ -71,6 +71,10 @@ class Tarifs
                            $billet->setMontant(8);
                        }
                        break;
+                  // case ($age < 4):
+                  //     $billet->setTypeTarif('gratuit');
+                  //     $billet->setMontant(0);
+                  //     break;
                }
                if ($age < 4){
                    $billet->setTypeTarif('gratuit');
@@ -81,7 +85,12 @@ class Tarifs
 
            $montantTotal += $billet->getMontant();
        }
+
+//      if ($actuCde->getTypeJournee() === 'Demi-journee'){
+  //         $actuCde->setMontantTotal($montantTotal/2);
+    //  } else {
         $actuCde->setMontantTotal($montantTotal);
+      // }
         $this->em->flush();
     }
 

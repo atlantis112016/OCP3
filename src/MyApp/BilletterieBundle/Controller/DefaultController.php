@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 
-class MainController extends Controller
+class DefaultController extends Controller
 {
     /**      
     * @Route("/", name="my_app_billetterie_home")     
