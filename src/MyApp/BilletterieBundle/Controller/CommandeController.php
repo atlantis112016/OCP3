@@ -37,7 +37,7 @@ class CommandeController extends Controller
                 //---------------------- Test Limite Billet - utilisation du service ------------------//
                 $isLimiteBillet =  $this->container->get('my_app_billetterie.limitebillet');
 
-                 if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), $cde->getNbBillet(), 0) === true)) {
+                 if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), $cde->getNbBillet()) === true)) {
 
                 $this->addFlash('danger',
                     'La limite de vente de billet pour le ' . $cde->getDateVisite()->format('d/m/Y') . ' est dépassée. Merci de choisir une autre date '
@@ -97,7 +97,7 @@ class CommandeController extends Controller
 
             //---------------------- Test Limite Billet - utilisation du service ------------------//
             $isLimiteBillet =  $this->container->get('my_app_billetterie.limitebillet');
-            if (($isLimiteBillet->isLimiteBillet($actuCommande->getDateVisite(), 0, 0) === true)) {
+            if (($isLimiteBillet->isLimiteBillet($actuCommande->getDateVisite(), 0) === true)) {
                 $this->addFlash('danger',
                     'La limite de vente de billet pour le ' . $actuCommande->getDateVisite()->format('d/m/Y') . ' est dépassée. Merci de choisir une autre date '
                 );
@@ -170,7 +170,7 @@ class CommandeController extends Controller
        // dump($nbBillet);die();
         //---------------------- Test Limite Billet - utilisation du service ------------------//
         $isLimiteBillet =  $this->container->get('my_app_billetterie.limitebillet');
-        if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), 1, 1) === true)) {
+        if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), 1) === true)) {
             $this->addFlash('danger',
                 'La limite de vente de billet pour le ' . $cde->getDateVisite()->format('d/m/Y') .
                 ' est dépassée. Vous ne pouvez plus ajouter de billet, merci de choisir une autre date.'

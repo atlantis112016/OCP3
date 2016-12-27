@@ -18,7 +18,7 @@ class LimiteBillet
     {
         $this->em = $em;
     }
-    public function isLimiteBillet(\DateTime $dateVisite, $nbBillet, $option)
+    public function isLimiteBillet(\DateTime $dateVisite, $nbBillet)
     {
         //--------- Récupération du seuil max ------//
         $maxi = Commande::MAX_BILLETS;
@@ -30,18 +30,11 @@ class LimiteBillet
         $totalBillet=0;
 
         foreach ($listReserv as $command) {
+
             $billetQuantite = $command->getNbBillet();
-//            dump('nbre billet dans boucle : '.$billetQuantite.' et ID commande : '.$command->getId().' date de visite : '.$dateVisite ->format('d-m-Y') );
             $totalBillet += $billetQuantite;
-           // dump($command->getNbBillet(), $command->getId());
+
         }
-
-        if ($option === 1) {
             return (($totalBillet + $nbBillet) > $maxi);
-        } else {
-            return (($totalBillet + $nbBillet) > $maxi);
-        }
-
-
     }
 }

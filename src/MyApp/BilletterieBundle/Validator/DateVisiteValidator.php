@@ -16,7 +16,7 @@ class DateVisiteValidator extends ConstraintValidator
     public function validate( $value, Constraint $constraint)
     {
         $date1 = new \DateTime('now');
-        if ($value->format('d-m-Y') < $date1->format('d-m-Y')) {
+        if ($value < $date1) {
             $this->context->addViolation($constraint->message);
         }
     }
