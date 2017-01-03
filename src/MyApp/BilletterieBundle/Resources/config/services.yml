@@ -2,8 +2,6 @@ services:
 #    my_app_billetterie.example:
 #        class: MyApp\BilletterieBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
-     my_app_billetterie.heure:
-        class: MyApp\BilletterieBundle\Services\LimiteHeureBillet
 
      my_app_billetterie.limitebillet:
         class: MyApp\BilletterieBundle\Services\LimiteBillet

@@ -5,6 +5,8 @@ namespace MyApp\BilletterieBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use MyApp\BilletterieBundle\Validator\JoursInterdit;
+use MyApp\BilletterieBundle\Validator\LimiteHeure;
+use MyApp\BilletterieBundle\Validator\LimiteHeureBillet;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use MyApp\BilletterieBundle\Validator\DateVisite;
@@ -53,6 +55,7 @@ class Commande
      * @Assert\DateTime(message="Ce champ doit être une date au format :d-m-Y")
      * @DateVisite()
      * @JoursInterdit()
+     * @LimiteHeureBillet()
      * @ORM\Column(type="datetime")
      */
     private $dateVisite;

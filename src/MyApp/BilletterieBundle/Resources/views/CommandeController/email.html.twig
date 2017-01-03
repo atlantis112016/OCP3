@@ -69,7 +69,7 @@
         {% for recapbillet in recapCde.billets %}
             <tr>
 
-                <td class="text-left">{{ recapbillet.nom }} {{ recapbillet.prenom }}</td>
+                <td class="text-left">{{ recapbillet.nom|capitalize }} {{ recapbillet.prenom|capitalize }}</td>
                 <td class="text-left">{{ recapbillet.dateNaissance|date('d/m/Y') }}</td>
                 {% if (recapbillet.isTarifReduit > 0) %}
                     <td class="text-left">Tarif réduit</td>

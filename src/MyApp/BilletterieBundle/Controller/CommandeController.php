@@ -45,13 +45,6 @@ class CommandeController extends Controller
                     return $this->redirectToRoute('my_app_billetterie_cde');
                 }
 
-                //------------------------------------- Test Heure 14h -------------------------------//
-                $isHeureBillet =  $this->container->get('my_app_billetterie.heure');
-                If ($cde->getTypeJournee() === 'Journee' && $isHeureBillet->isLimiteHeure($cde->getDateVisite()) === true) {
-                    $this->addFlash('danger', 'Vous devez prendre un ticket demi-journée');
-                    return $this->redirectToRoute('my_app_billetterie_cde');
-                }
-
                 //----------- Chgt du statut de la commande --------------
                 $cde ->setStatut(Commande::STATUT_ENCOURS);
 
@@ -64,7 +57,7 @@ class CommandeController extends Controller
                 }
                 $em->flush();
 
-            $this->addFlash('Info', 'ETAPE 1 bien enregistrée');
+            $this->addFlash('info', 'ETAPE 1 bien enregistrée');
             return $this->redirectToRoute('my_app_billetterie_billet', array('id' => $cde->getId(),));
             }
 
@@ -102,12 +95,6 @@ class CommandeController extends Controller
                     'La limite de vente de billet pour le ' . $actuCommande->getDateVisite()->format('d/m/Y') . ' est dépassée. Merci de choisir une autre date '
                 );
                 return $this->redirectToRoute('my_app_billetterie_editcde', array('id' => $actuCommande->getId(),));
-            }
-
-            //------------------------------------- Test Heure 14h -------------------------------//
-            $isHeureBillet =  $this->container->get('my_app_billetterie.heure');
-            If ($actuCommande->getTypeJournee() === 'Journee' && $isHeureBillet->isLimiteHeure($actuCommande->getDateVisite()) === true) {
-                return new Response("vous devez prendre un ticket demi-journée");
             }
 
             // ---------- CREATION ET STOCKAGE DES BILLETS DANS L'ARRYCOLLECTION ---------//
@@ -167,7 +154,7 @@ class CommandeController extends Controller
     public function addBillet(Request $request, Commande $cde)
     {
         $getNbBillet = $cde->getNbBillet();
-       // dump($nbBillet);die();
+
         //---------------------- Test Limite Billet - utilisation du service ------------------//
         $isLimiteBillet =  $this->container->get('my_app_billetterie.limitebillet');
         if (($isLimiteBillet->isLimiteBillet($cde->getDateVisite(), 1) === true)) {
@@ -198,11 +185,6 @@ class CommandeController extends Controller
     public function deleteBillet(Request $request, Billet $billet)
     {
         $em = $this->getDoctrine()->getManager();
-
-        //-----------Requête pour cibler le billet que l'on souhaite supprimer---------//
-        // $deleteCde = $em->getRepository('MyAppBilletterieBundle:Billet')
-        //            ->findOneBy(array('id'=>$id));
-
          //-----------Récupération du numéro de la cde---------//
          $numCde = $billet->getCommande()->getId();
          $recNbBillet = $em->getRepository('MyAppBilletterieBundle:Commande')
@@ -228,10 +210,6 @@ class CommandeController extends Controller
      * */
     public function recapAction(Request $request, Commande $actuCde )
     {
-
-        //------------------- Listing des billets par rapport à la commande ------------//
-          // $listeBillets = $actuCde->getBillets();
-
         //---------------- Calcul des tarifs des billets appel du service Tarifs.php ---------------//
         $calculTarif = $this->container->get('my_app_billetterie.tarifs');
         $calculTarif->calculTarifs($actuCde);
@@ -270,8 +248,7 @@ class CommandeController extends Controller
                 }
             //---------------------Si pas d'erreur on envoie le mail ------------------------//
             if (!$error) {
-                $this->addFlash('info', 'Votre paiement a été accepté. 
-           Vous allez recevoir un email récapitulatif de votre commande.');
+                $this->addFlash('info', 'Votre paiement a été accepté. Vous allez recevoir un email récapitulatif de votre commande.');
 
            //--------------------- Appel au service d'envoi de mail -------------------------//
                 $this->get('my_app_billetterie.sendmail')->confirmMail($recapCde);
