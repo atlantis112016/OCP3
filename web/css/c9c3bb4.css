@@ -215,7 +215,7 @@ section ul li:before {
 
 
 header {
-	background-image: url('../images/accueil.png');
+	background-image: url(../bundles/myappbilletterie/images/accueil.png);
 	background-repeat: none;
 	background-attachment: scroll;
 	background-position: center center;

@@ -19,7 +19,6 @@ class DateVisiteValidator extends ConstraintValidator
         $date1 = $dateReserv->format('d/m/Y');
         $date2 = $value->format('d/m/Y');
         if ($date2 < $date1) {
-            dump($value , $dateReserv);
             $this->context->addViolation($constraint->message);
         }
     }
