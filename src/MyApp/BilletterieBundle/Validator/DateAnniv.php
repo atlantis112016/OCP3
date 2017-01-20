@@ -15,5 +15,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class DateAnniv extends Constraint
 {
-    public $message = "La date que vous avez rentré ne peut-être égal ou supérieur à la date d'aujourd'hui.";
+    public $message = "La date que vous avez rentré ne peut-être égal ou supérieur à la date de visite.";
 }

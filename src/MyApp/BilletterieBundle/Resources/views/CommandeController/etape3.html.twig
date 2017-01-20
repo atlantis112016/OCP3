@@ -72,19 +72,15 @@
 
                                     <td class="text-left">{{ recapbillet.nom|upper }} {{ recapbillet.prenom|capitalize }}</td>
                                     <td class="text-left">{{ recapbillet.dateNaissance|date('d/m/Y') }}</td>
-                                    {% if (recapbillet.isTarifReduit > 0) %}
-                                        <td class="text-left">Tarif réduit</td>
-                                     {% else %}
-                                         <td class="text-left">Sans tarif réduit</td>
-                                     {% endif %}
-                                    <td class="text-right"> {{ recapbillet.montant }} € TTC</td>
+                                     <td class="text-left">Tarif {{ recapbillet.typeTarif }}</td>
+                                    <td class="text-right"> {{ recapbillet.montant|number_format(2,',') }} € TTC</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                         <tbody>
                             <tr class="info">
                                 <th colspan="3" class="text-left">Total de votre commande</th>
-                                <th class="text-right" id="total-price"> {{ recapCde.montantTotal }} € TTC</td>
+                                <th class="text-right" id="total-price"> {{ recapCde.montantTotal|number_format(2,',') }} € TTC</td>
                             </tr>
                         </tbody>
                         </table>

@@ -43,7 +43,7 @@ class Tarifs
                if ($actuCde->getTypeJournee() === 'Demi-journee') {
                    $billet->setMontant(10/2);
                } else {
-                       $billet->setMontant(10);
+                   $billet->setMontant(10);
                }
            } else {
                switch ($age) {

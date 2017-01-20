@@ -16,7 +16,6 @@ class DateAnnivValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         $date1 = $this->context->getRoot()->getData()->getDateVisite();
-//dump($date1,$value);
         if ($value >= $date1) {
            $this->context->addViolation($constraint->message);
          }
