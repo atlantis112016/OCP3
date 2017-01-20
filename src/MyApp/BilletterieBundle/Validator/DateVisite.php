@@ -16,4 +16,5 @@ use Symfony\Component\Validator\Constraint;
 class DateVisite extends Constraint
 {
     public $message = "La date que vous avez rentré ne peut-être inférieure à la date d'aujourd'hui.";
+
 }

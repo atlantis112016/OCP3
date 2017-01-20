@@ -9,12 +9,7 @@ use MyApp\BilletterieBundle\Form\CommandeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Stripe\Stripe;
-use Stripe\Charge;
+
 
 
 

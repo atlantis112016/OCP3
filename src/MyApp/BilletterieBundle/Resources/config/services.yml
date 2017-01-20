@@ -18,7 +18,6 @@ services:
         arguments:
             - "@mailer"
             - "@twig"
-            - "@service_container"
             - "@doctrine.orm.entity_manager"
 
      my_app_billetterie.stripe:
