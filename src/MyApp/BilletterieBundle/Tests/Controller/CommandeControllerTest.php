@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: MisterX
+ * User: Fabienne BERNARD
  * Date: 26/12/2016
  * Time: 10:24
  */
@@ -26,8 +26,8 @@ class CommandeControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', $url);
         $form = $crawler->selectButton('ETAPE SUIVANTE')->form();
         $value = $form->getPhpValues();
-        $value['myapp_billetteriebundle_commande[email]'] = 'garnier.florentin@gmail.com';
-        $value['myapp_billetteriebundle_commande[dateVisite]'] = '24-12-2016';
+        $value['myapp_billetteriebundle_commande[email]'] = 'atlantis11@libertysurf.fr';
+        $value['myapp_billetteriebundle_commande[dateVisite]'] = '21-01-2017';
         $value['myapp_billetteriebundle_commande[typeJournee]'] = 'Demi-journee';
         $value['myapp_billetteriebundle_commande[nbBillet]'] = 2;
     }
@@ -43,7 +43,7 @@ class CommandeControllerTest extends WebTestCase
         // création d'un client
         $this->client = static::createClient();
         // Création d'une requete de la page formulaire
-        $url = $this->client->getContainer()->get('router')->generate('my_app_billetterie_billet',array('id'=>8));
+        $url = $this->client->getContainer()->get('router')->generate('my_app_billetterie_billet',array('id'=>37));
         $crawler = $this->client->request('GET', $url);
         // Sélection du formulaire
         $form = $crawler->selectButton('ETAPE SUIVANTE')->form();
@@ -71,10 +71,10 @@ class CommandeControllerTest extends WebTestCase
     public function testRecapPage()
     {
         $this->client = static::createClient();
-        $url = $this->client->getContainer()->get('router')->generate('my_app_billetterie_recap',array('id'=>8));
+        $url = $this->client->getContainer()->get('router')->generate('my_app_billetterie_recap',array('id'=>37));
         $crawler = $this->client->request('GET', $url);
         $this->assertEquals(' Numéro de votre Commande :', $crawler->filter('th')->text());
-        $this->assertEquals('LOUVRE4401W1482771329', $crawler->filter('td')->text());
+        $this->assertEquals('LOUVRE3408R1484929714', $crawler->filter('td')->text());
         $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
     }
 }
