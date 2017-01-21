@@ -27,8 +27,8 @@ class Tarifs
         //---------------Recherche de la commande dans billet--------------------//
         $listeBillet = $actuCde->getBillets();
 
-        //--------------------- Date du jour ---------------------//
-        $dateNow = new \DateTime('now');
+        //--------------------- Date de la visite ---------------------//
+        $dateNow = $actuCde ->getDateVisite();
         $montantTotal = 0;
         //----------------Boucle sur les billets------------------//
        foreach ( $listeBillet as $billet) {
