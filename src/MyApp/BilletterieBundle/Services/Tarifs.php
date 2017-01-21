@@ -38,7 +38,7 @@ class Tarifs
            $age = $dateNo->diff($dateNow)->format('%y');
 
            //----------------Condition pour trouver le bon montant et le bon type de tarif--------------//
-           if ($billet->getTarifReduit() && $age > 11) {
+           if ($billet->getTarifReduit() && $age > 17) {
                $billet->setTypeTarif('reduit');
                if ($actuCde->getTypeJournee() === 'Demi-journee') {
                    $billet->setMontant(10/2);
@@ -55,7 +55,7 @@ class Tarifs
                            $billet->setMontant(12);
                        }
                        break;
-                   case ($age > 12 && $age < 60):
+                   case ($age >= 12 && $age < 60):
                        $billet->setTypeTarif('normal');
                        if ($actuCde->getTypeJournee() === 'Demi-journee') {
                            $billet->setMontant(16/2);
